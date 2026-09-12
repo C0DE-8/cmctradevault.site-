@@ -1,0 +1,233 @@
+.demo {
+  font-size: 8px;
+  color: var(--mint);
+  letter-spacing: 1px;
+  border: 1px solid #b3f6aa25;
+  background: #b3f6aa08;
+  border-radius: 20px;
+  padding: 9px 12px;
+  white-space: nowrap;
+}
+.terminal {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+  gap: 23px;
+  align-items: start;
+}
+.chartPanel,
+.ticket,
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--panel);
+  min-width: 0;
+}
+.chartHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 10px;
+  gap: 15px;
+}
+.chartHeading strong {
+  font-size: 18px;
+  font-weight: 500;
+}
+.chartHeading div > span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 7px;
+}
+.chartHeading > span {
+  display: flex;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.liveChart {
+  height: 390px;
+  padding: 12px;
+}
+.chartFoot {
+  border-top: 1px solid var(--line);
+  font-size: 10px;
+  color: var(--muted);
+  padding: 18px 24px;
+}
+.ticket {
+  padding: 23px;
+}
+.ticketHead {
+  margin-bottom: 23px;
+}
+.ticketHead h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+  font-weight: 500;
+}
+.ticketHead > span {
+  font-size: 11px;
+  color: var(--mint);
+}
+.direction {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.direction button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 8px;
+  padding: 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.direction .up {
+  color: var(--mint);
+  border-color: #b3f6aa50;
+  background: #b3f6aa10;
+}
+.direction .down {
+  color: #f29288;
+  border-color: #f2928850;
+  background: #f2928810;
+}
+.durations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.durations button {
+  padding: 10px;
+  border-radius: 7px;
+  background: transparent;
+  border: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--muted);
+}
+.durations .selected {
+  background: #b3f6aa0a;
+  border-color: #b3f6aa40;
+  color: var(--mint);
+}
+.terms {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 17px;
+}
+.terms > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.terms strong {
+  font-weight: 500;
+  color: var(--text);
+}
+.note {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 22px;
+}
+.notice {
+  font-size: 12px;
+  color: #e7c286;
+}
+.panel {
+  padding: 25px;
+  margin-top: 24px;
+}
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+.heading h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+.heading span {
+  font-size: 10px;
+  color: var(--muted);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.actions > button:last-child {
+  background: none;
+  border: 0;
+  padding: 10px;
+  color: var(--mint);
+}
+.table {
+  overflow: auto;
+}
+.table th,
+.table td {
+  font-size: 11px;
+  padding: 17px 12px;
+}
+.positive {
+  color: var(--mint);
+}
+.negative {
+  color: #f29288;
+}
+@media (max-width: 1100px) {
+  .terminal {
+    grid-template-columns: 1fr;
+  }
+  .ticket {
+    max-width: none;
+  }
+  .liveChart {
+    height: 340px;
+  }
+}
+@media (max-width: 500px) {
+  .demo {
+    display: none;
+  }
+  .chartHeading {
+    padding: 20px 18px 10px;
+  }
+  .chartHeading > span {
+    font-size: 8px;
+  }
+  .liveChart {
+    height: 300px;
+  }
+  .heading {
+    align-items: start;
+    flex-direction: column;
+  }
+}
+.consent {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+.consent input {
+  accent-color: var(--mint);
+  margin-top: 3px;
+}
+.consent a {
+  color: var(--mint);
+}

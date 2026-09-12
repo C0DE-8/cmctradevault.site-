@@ -1,0 +1,63 @@
+.form {
+  display: grid;
+  gap: 18px;
+}
+.form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: grid;
+  gap: 18px;
+}
+.form > button {
+  justify-self: start;
+}
+.success {
+  background: #b3f6aa0c;
+  color: var(--mint);
+  border: 1px solid #b3f6aa25;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin: 0;
+}
+.review {
+  background: #b3f6aa06;
+  border: 1px solid #b3f6aa30;
+  border-radius: 10px;
+  padding: 20px;
+}
+.review h3 {
+  font-size: 16px;
+  margin: 0;
+}
+.review p {
+  font-size: 12px;
+  color: var(--muted);
+}
+.review dl {
+  margin: 20px 0;
+}
+.review dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0;
+  font-size: 12px;
+}
+.review dt {
+  color: var(--muted);
+  text-transform: capitalize;
+}
+.review dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+.review > div {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}

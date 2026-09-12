@@ -1,0 +1,673 @@
+import BalanceManager from "../components/BalanceManager";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  FiUsers,
+  FiCreditCard,
+  FiShield,
+  FiActivity,
+  FiArrowUpRight,
+} from "react-icons/fi";
+import { adminApi } from "../api/admin";
+import { adminSession } from "../api/admin";
+import { useApi } from "../hooks/useApi";
+import { Heading, Status, Empty, Button, Field } from "../components/UI";
+import { money } from "../utils/format";
+import { assets } from "../constants/assets";
+import ActionForm from "../components/ActionForm";
+import Dialog from "../components/Dialog";
+import s from "./AdminWorkspace.module.css";
+export default function AdminWorkspace({ section }) {
+  return section === "users" ? (
+    <Investors />
+  ) : section === "profile" ? (
+    <AdminProfile />
+  ) : section === "wallet-addresses" ? (
+    <WalletAddresses />
+  ) : section === "approvals" ? (
+    <Approvals />
+  ) : section === "activity" ? (
+    <Activity />
+  ) : (
+    <Overview />
+  );
+}
+function AdminProfile() {
+  const profile = useApi("/me", adminApi);
+  const [identity, setIdentity] = useState({ name: "", email: "" });
+  const [passwords, setPasswords] = useState({ current_password: "", new_password: "" });
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  const currentIdentity = profile.data?.admin
+    ? { name: identity.name || profile.data.admin.name, email: identity.email || profile.data.admin.email }
+    : identity;
+
+  async function updateProfile(e, includePassword = false) {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      const result = await adminApi.patch("/profile", {
+        ...currentIdentity,
+        ...(includePassword ? passwords : {}),
+      });
+      adminSession.set(result.token);
+      setIdentity(result.admin);
+      setMessage(result.message);
+      if (includePassword) setPasswords({ current_password: "", new_password: "" });
+      profile.reload();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <>
+      <Heading eyebrow="ADMINISTRATION" title="Your profile.">
+        Keep the details you use to access and manage the workspace up to date.
+      </Heading>
+      <Status {...profile} retry={profile.reload} />
+      {profile.data && (
+        <div className={s.profileLayout}>
+          <section className={s.panel}>
+            <div className={s.panelIntro}>
+              <span className={s.profileBadge}><FiShield /></span>
+              <div><h3>Personal details</h3><p>These details identify you in the workspace.</p></div>
+            </div>
+            <form className={s.profileForm} onSubmit={updateProfile}>
+              <Field label="Name" name="name" value={currentIdentity.name} onChange={(e) => setIdentity({ ...currentIdentity, name: e.target.value })} required />
+              <Field label="Email address" name="email" type="email" value={currentIdentity.email} onChange={(e) => setIdentity({ ...currentIdentity, email: e.target.value })} required />
+              <Button type="submit" disabled={busy}>{busy ? "Saving…" : "Save profile"}</Button>
+            </form>
+          </section>
+          <section className={s.panel}>
+            <div className={s.panelIntro}>
+              <span className={s.profileBadge}><FiShield /></span>
+              <div><h3>Sign-in security</h3><p>Change your password without leaving the workspace.</p></div>
+            </div>
+            <form className={s.profileForm} onSubmit={(e) => updateProfile(e, true)}>
+              <Field label="Current password" name="current_password" type="password" value={passwords.current_password} onChange={(e) => setPasswords({ ...passwords, current_password: e.target.value })} required />
+              <Field label="New password" name="new_password" type="password" minLength="8" value={passwords.new_password} onChange={(e) => setPasswords({ ...passwords, new_password: e.target.value })} required />
+              <Button type="submit" secondary disabled={busy}>Update password</Button>
+            </form>
+          </section>
+        </div>
+      )}
+      {error && <p className={s.formError} role="alert">{error}</p>}
+      {message && <p className={s.formSuccess} role="status">{message}</p>}
+    </>
+  );
+}
+function WalletAddresses() {
+  const wallets = useApi("/wallet-addresses", adminApi);
+  const [editing, setEditing] = useState(null);
+  const [qrWallet, setQrWallet] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  async function submit(e) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const body = new FormData(form);
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      const result = editing
+        ? await adminApi.put(`/wallet-addresses/${editing.id}`, body)
+        : await adminApi.post("/wallet-addresses", body);
+      setMessage(result.message);
+      setEditing(null);
+      form.reset();
+      wallets.reload();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function remove(wallet) {
+    if (!window.confirm(`Remove the ${wallet.asset} wallet address?`)) return;
+    setBusy(true);
+    setError("");
+    try {
+      const result = await adminApi.delete(`/wallet-addresses/${wallet.id}`);
+      setMessage(result.message);
+      if (editing?.id === wallet.id) setEditing(null);
+      wallets.reload();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <>
+      <Heading eyebrow="PAYMENT SETTINGS" title="Wallet addresses.">
+        Keep the deposit destinations shown to investors accurate and current.
+      </Heading>
+      <div className={s.walletLayout}>
+        <section className={s.panel}>
+          <h3>{editing ? `Edit ${editing.asset} address` : "Add wallet address"}</h3>
+          <form className={s.walletForm} onSubmit={submit}>
+            <Field label="Asset" name="asset" as="select" defaultValue={editing?.asset || "BTC"} required>
+              {assets.map((asset) => <option key={asset}>{asset}</option>)}
+            </Field>
+            <Field
+              label="Wallet address"
+              name="address"
+              defaultValue={editing?.address || ""}
+              placeholder="Paste the deposit address"
+              required
+            />
+            <Field label={editing?.qr_path ? "Replace QR code (optional)" : "QR code (optional)"} name="qr" type="file" accept="image/png,image/jpeg,image/webp" />
+            <div className={s.walletActions}>
+              <Button type="submit" disabled={busy}>
+                {busy ? "Saving…" : editing ? "Update address" : "Save address"}
+              </Button>
+              {editing && <Button type="button" secondary onClick={() => setEditing(null)}>Cancel</Button>}
+            </div>
+          </form>
+          {error && <p className={s.formError} role="alert">{error}</p>}
+          {message && <p className={s.formSuccess} role="status">{message}</p>}
+        </section>
+        <section className={s.panel}>
+          <h3>Published deposit addresses</h3>
+          <Status {...wallets} retry={wallets.reload} />
+          {wallets.data && (wallets.data.wallets.length ? (
+            <div className={s.walletList}>
+              {wallets.data.wallets.map((wallet) => (
+                <article className={s.walletItem} key={wallet.id}>
+                  <div className={s.walletAsset}><strong>{wallet.asset}</strong><span>{wallet.qr_path ? "QR code uploaded" : "Address only"}</span></div>
+                  <code>{wallet.address}</code>
+                  <div className={s.walletActions}>
+                    {wallet.qr_url && <button type="button" onClick={() => setQrWallet(wallet)}>View QR</button>}
+                    <button type="button" onClick={() => setEditing(wallet)}>Edit</button>
+                    <button type="button" className={s.danger} disabled={busy} onClick={() => remove(wallet)}>Remove</button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : <Empty>No deposit addresses have been added yet.</Empty>)}
+        </section>
+      </div>
+      {qrWallet && (
+        <Dialog title={`${qrWallet.asset} deposit QR code`} onClose={() => setQrWallet(null)}>
+          <div className={s.qrPreview}>
+            <img src={qrWallet.qr_url} alt={`${qrWallet.asset} wallet address QR code`} />
+            <code>{qrWallet.address}</code>
+          </div>
+        </Dialog>
+      )}
+    </>
+  );
+}
+function Overview() {
+  const profile = useApi("/me", adminApi),
+    summary = useApi("/overview", adminApi);
+  const values = summary.data?.overview;
+  return (
+    <>
+      <Heading eyebrow="ADMINISTRATION" title="Your control room.">
+        A clear view of investors, pending requests, and platform activity.
+      </Heading>
+      <Status {...profile} retry={profile.reload} />
+      {profile.data && (
+        <div className={s.profile}>
+          <FiShield />
+          <div>
+            <strong>{profile.data.admin.name}</strong>
+            <span>{profile.data.admin.email}</span>
+          </div>
+          <span>Administrator</span>
+        </div>
+      )}
+      <Status {...summary} retry={summary.reload} />
+      {values && (
+        <div className={s.stats}>
+          {[
+            [FiUsers, "Investors", values.users, "/admin/users"],
+            [
+              FiCreditCard,
+              "Pending deposits",
+              values.pending_deposits,
+              "/admin/approvals",
+            ],
+            [
+              FiCreditCard,
+              "Pending withdrawals",
+              values.pending_withdrawals,
+              "/admin/approvals",
+            ],
+            [FiShield, "KYC reviews", values.pending_kyc, "/admin/approvals"],
+          ].map(([Icon, label, value, to]) => (
+            <Link to={to} key={label}>
+              <Icon />
+              <span>{label}</span>
+              <strong>{value}</strong>
+              <FiArrowUpRight />
+            </Link>
+          ))}
+        </div>
+      )}
+      <div className={s.panel}>
+        <h3>Platform overview</h3>
+        <div className={s.metrics}>
+          <div>
+            <span>Active investments</span>
+            <strong>{values ? money(values.invested) : "—"}</strong>
+          </div>
+          <div>
+            <span>Open trades</span>
+            <strong>{values?.open_trades ?? "—"}</strong>
+          </div>
+        </div>
+        <p className={s.note}>
+          Administrative changes and sign-in attempts are recorded in activity
+          logs. Passwords, PINs, and tokens are never included.
+        </p>
+        <Button to="/admin/activity" secondary>
+          View activity logs <FiActivity />
+        </Button>
+      </div>
+    </>
+  );
+}
+function Investors() {
+  const users = useApi("/users", adminApi),
+    [search, setSearch] = useState(""),
+    [selected, setSelected] = useState(null);
+  const rows = (users.data?.users || []).filter((u) =>
+    `${u.full_name} ${u.email} ${u.username}`
+      .toLowerCase()
+      .includes(search.toLowerCase()),
+  );
+  return (
+    <>
+      <Heading eyebrow="INVESTOR ACCOUNTS" title="Investors.">
+        Review account balances and manage trading indicators.
+      </Heading>
+      <div className={s.search}>
+        <Field
+          label="Search investors"
+          placeholder="Name, email, or username"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+      <Status {...users} retry={users.reload} />
+      {users.data && (
+        <div className={s.panel}>
+          {rows.length ? (
+            <div className={s.table}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Investor</th>
+                    <th>Available</th>
+                    <th>Invested</th>
+                    <th>Strength</th>
+                    <th>Status</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((u) => (
+                    <tr key={u.id}>
+                      <td>
+                        <strong>{u.full_name}</strong>
+                        <small>{u.email}</small>
+                      </td>
+                      <td>{money(u.main_balance)}</td>
+                      <td>{money(u.investment_balance)}</td>
+                      <td>{Number(u.signal_strength)} / 100</td>
+                      <td>{u.account_status}</td>
+                      <td>
+                        <Button secondary onClick={() => setSelected(u)}>
+                          Manage account
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <Empty>No investors match your search.</Empty>
+          )}
+        </div>
+      )}
+      {selected && (
+        <Dialog title={selected.full_name} onClose={() => setSelected(null)}>
+          <BalanceManager userId={selected.id} onUpdate={users.reload} />
+          <h3>Trading settings</h3>
+          <p className={s.note}>
+            {selected.email} · Indicators are account settings, not predictions
+            of market returns.
+          </p>
+          <ActionForm
+            client={adminApi}
+            endpoint={`/users/${selected.id}/trading-settings`}
+            method="patch"
+            label="Review trading settings"
+            review
+            reviewText="These settings are visible in the investor’s dashboard and trading workspace."
+            onSuccess={() => {
+              users.reload();
+              setSelected(null);
+            }}
+          >
+            <Field
+              label="Signal strength (0–100)"
+              name="signal_strength"
+              type="number"
+              min="0"
+              max="100"
+              step="1"
+              defaultValue={selected.signal_strength}
+              required
+            />
+            <Field
+              label="Trade progress (0–100)"
+              name="trade_progress"
+              type="number"
+              min="0"
+              max="100"
+              step="1"
+              defaultValue={selected.trade_progress}
+              required
+            />
+            <Field
+              label="Trading status"
+              name="trading_status"
+              as="select"
+              defaultValue={selected.trading_status}
+            >
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="locked">Locked</option>
+            </Field>
+          </ActionForm>
+        </Dialog>
+      )}
+    </>
+  );
+}
+function Approvals() {
+  const [type, setType] = useState("deposits");
+  return (
+    <>
+      <Heading eyebrow="REVIEW QUEUE" title="Requests awaiting review.">
+        Check submitted details before approving or declining a request.
+      </Heading>
+      <div className={s.tabs}>
+        {[
+          ["deposits", "Deposits"],
+          ["withdrawals", "Withdrawals"],
+          ["kyc", "Identity verification"],
+        ].map(([value, label]) => (
+          <button
+            key={value}
+            className={type === value ? s.active : ""}
+            onClick={() => setType(value)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <Queue key={type} type={type} />
+    </>
+  );
+}
+function Queue({ type }) {
+  const [page, setPage] = useState(1),
+    [selected, setSelected] = useState(null);
+  const result = useApi(
+    `/${type}?status=pending&page=${page}&limit=20`,
+    adminApi,
+  );
+  const rows = result.data?.[type === "kyc" ? "kyc_list" : type] || [];
+  return (
+    <>
+      <Status {...result} retry={result.reload} />
+      {result.data && (
+        <section className={s.panel}>
+          {rows.length ? (
+            <div className={s.table}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Request</th>
+                    <th>Investor</th>
+                    <th>{type === "kyc" ? "Submitted" : "Amount"}</th>
+                    <th>Details</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((r) => (
+                    <tr key={r.id}>
+                      <td>#{r.id}</td>
+                      <td>{r.email || r.full_name || `User #${r.user_id}`}</td>
+                      <td>
+                        {type === "kyc"
+                          ? new Date(r.created_at).toLocaleDateString()
+                          : money(r.amount)}
+                      </td>
+                      <td>{r.asset || r.method || "Identity documents"}</td>
+                      <td>
+                        <Button secondary onClick={() => setSelected(r)}>
+                          Review request
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <Empty>No pending requests.</Empty>
+          )}
+          {result.data.meta && (
+            <Pagination
+              page={page}
+              pages={result.data.meta.total_pages}
+              onChange={setPage}
+            />
+          )}
+        </section>
+      )}
+      {selected && (
+        <Dialog
+          title={`Review ${type === "kyc" ? "identity" : type.slice(0, -1)} #${selected.id}`}
+          onClose={() => setSelected(null)}
+        >
+          <RequestDetails type={type} item={selected} />
+          <ActionForm
+            client={adminApi}
+            endpoint={`/${type}/${selected.id}/approve`}
+            label="Approve request"
+            review
+            reviewText={
+              type === "deposits"
+                ? "Approval credits this deposit to the investor’s account."
+                : type === "withdrawals"
+                  ? "Only approve after completing the payout through your payment process."
+                  : "Confirm the identity documents were checked."
+            }
+            onSuccess={() => {
+              result.reload();
+              setSelected(null);
+            }}
+          >
+            <Field
+              label="Review note (optional)"
+              name="admin_note"
+              as="textarea"
+            />
+          </ActionForm>
+          <div className={s.decline}>
+            <ActionForm
+              client={adminApi}
+              endpoint={`/${type}/${selected.id}/decline`}
+              label="Decline request"
+              review
+              reviewText="This rejects the request and records your reason."
+              onSuccess={() => {
+                result.reload();
+                setSelected(null);
+              }}
+            >
+              <Field label="Reason for declining" name="admin_note" required />
+            </ActionForm>
+          </div>
+        </Dialog>
+      )}
+    </>
+  );
+}
+function RequestDetails({ type, item }) {
+  const uploadBase = (import.meta.env.VITE_API_URL || "").replace(
+    /\/api\/users\/?$/,
+    "",
+  );
+  return (
+    <div className={s.details}>
+      {Object.entries(item)
+        .filter(
+          ([k, v]) =>
+            v != null &&
+            [
+              "email",
+              "full_name",
+              "amount",
+              "asset",
+              "method",
+              "crypto_address",
+              "crypto_network",
+              "bank_name",
+              "bank_account_number",
+              "bank_account_name",
+              "bank_country",
+            ].includes(k),
+        )
+        .map(([k, v]) => (
+          <div key={k}>
+            <span>{k.replaceAll("_", " ")}</span>
+            <strong>{String(v)}</strong>
+          </div>
+        ))}
+      {type === "deposits" && item.proof_path && (
+        <a
+          href={`${uploadBase}${item.proof_path}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open payment proof <FiArrowUpRight />
+        </a>
+      )}
+      {type === "kyc" &&
+        ["selfie_filename", "id_front_filename", "id_back_filename"].map(
+          (k) =>
+            item[k] && (
+              <a
+                key={k}
+                href={`${uploadBase}/uploads/kyc/${encodeURIComponent(item[k])}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open {k.replace("_filename", "").replaceAll("_", " ")}{" "}
+                <FiArrowUpRight />
+              </a>
+            ),
+        )}
+    </div>
+  );
+}
+function Activity() {
+  const [page, setPage] = useState(1);
+  const result = useApi(`/audit-logs?page=${page}`, adminApi);
+  return (
+    <>
+      <Heading
+        eyebrow="ACCOUNTABILITY"
+        title="Admin activity."
+        action={
+          <Button secondary onClick={result.reload}>
+            Refresh logs
+          </Button>
+        }
+      >
+        Sign-ins and administrative changes, recorded from this update onward.
+      </Heading>
+      <Status {...result} retry={result.reload} />
+      {result.data && (
+        <section className={s.panel}>
+          {result.data.logs.length ? (
+            <div className={s.table}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Administrator</th>
+                    <th>Action</th>
+                    <th>Resource</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.data.logs.map((log) => (
+                    <tr key={log.id}>
+                      <td>{new Date(log.created_at).toLocaleString()}</td>
+                      <td>{log.admin_email || "Unauthenticated sign-in"}</td>
+                      <td>{log.method}</td>
+                      <td>{log.resource}</td>
+                      <td>
+                        <span
+                          className={log.status_code < 400 ? s.ok : s.failure}
+                        >
+                          {log.status_code < 400 ? "Success" : "Rejected"} ·{" "}
+                          {log.status_code}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <Empty>Administrative activity will appear here.</Empty>
+          )}
+          <Pagination
+            page={page}
+            pages={Math.ceil(result.data.total / result.data.limit)}
+            onChange={setPage}
+          />
+        </section>
+      )}
+    </>
+  );
+}
+function Pagination({ page, pages, onChange }) {
+  return (
+    <div className={s.pagination}>
+      <button disabled={page <= 1} onClick={() => onChange(page - 1)}>
+        Previous
+      </button>
+      <span>
+        Page {page} of {Math.max(1, pages || 1)}
+      </span>
+      <button disabled={page >= pages} onClick={() => onChange(page + 1)}>
+        Next
+      </button>
+    </div>
+  );
+}

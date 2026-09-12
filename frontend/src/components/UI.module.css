@@ -1,0 +1,199 @@
+.brand {
+  display: inline-flex;
+  align-items: center;
+  font-size: 25px;
+  font-weight: 750;
+  letter-spacing: -1px;
+  gap: 0;
+  color: var(--text);
+}
+.mark {
+  background: var(--mint);
+  color: #152018;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  margin-right: 9px;
+  font-size: 26px;
+}
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.light {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 2.3px;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+.dot {
+  font-size: 10px;
+  align-self: flex-start;
+  margin-top: 7px;
+  margin-left: 3px;
+}
+.button {
+  border: 1px solid var(--mint);
+  background: var(--mint);
+  color: #142016;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 21px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+.button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.secondary {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--text);
+}
+.heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.heading h1 {
+  font-size: 32px;
+  letter-spacing: -1.3px;
+  margin: 9px 0;
+}
+.heading p {
+  color: var(--muted);
+  font-size: 14px;
+}
+.eyebrow {
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--mint);
+  font-weight: 600;
+}
+.status,
+.empty {
+  padding: 55px 24px;
+  text-align: center;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.empty {
+  flex-direction: column;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+}
+.empty h3 {
+  margin: 0;
+  color: var(--text);
+}
+.empty p {
+  margin: 0;
+  font-size: 14px;
+}
+.empty > svg {
+  font-size: 28px;
+  color: var(--mint);
+}
+.error {
+  padding: 17px;
+  background: #ff7c7710;
+  color: #ffb4af;
+  border: 1px solid #ff7c7730;
+  border-radius: 9px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.error button {
+  margin-left: auto;
+  color: inherit;
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--line);
+  border-top-color: var(--mint);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 12px;
+  color: #c6cdc8;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #111614;
+  color: var(--text);
+  padding: 13px;
+  font: inherit;
+  font-size: 14px;
+  min-height: 44px;
+}
+.field select {
+  appearance: none;
+  cursor: pointer;
+  padding-right: 40px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--mint) 50%), linear-gradient(135deg, var(--mint) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 19px, calc(100% - 13px) 19px;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+.field input[type="file"] {
+  font-size: 12px;
+}
+.arrowLink {
+  color: var(--mint);
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.smallChart {
+  width: 110px;
+  height: 40px;
+  display: block;
+}

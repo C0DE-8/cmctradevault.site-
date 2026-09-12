@@ -1,0 +1,42 @@
+const { chromium } = require('@playwright/test');
+const assert = require('node:assert/strict');
+(async () => {
+  const browser = await chromium.launch({headless:true, executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH || undefined});
+  const page = await browser.newPage({viewport:{width:1440,height:1000}});
+  const errors=[]; page.on('pageerror', e=>errors.push(e.message));
+  await page.route('**/api/markets/*', route=>route.fulfill({json:{asset:'BTC',price:62000,changePercent:-1.25,updatedAt:new Date().toISOString(),stale:false,candles:Array.from({length:24},(_,i)=>({time:Date.now()+i*3600000,close:62000+i*15}))}}));
+  await page.route('**/embed-widget-timeline.js', route=>route.abort());
+  await page.goto('http://127.0.0.1:5173', {waitUntil:'domcontentloaded'});
+  await page.getByRole('status',{name:'Loading Valthera Investments'}).waitFor({state:'detached',timeout:2000});
+  await page.getByRole('button',{name:'Binary practice'}).click();
+  await page.getByRole('heading',{name:'A clearer way to understand up or down.'}).waitFor();
+  await page.getByRole('button',{name:'Copy trading',exact:true}).click();
+  await page.getByRole('heading',{name:'Explore another approach. Make your own decision.'}).waitFor();
+  await page.getByRole('button',{name:'Market trading',exact:true}).click();
+  const pause=page.getByRole('button',{name:'Pause coin ticker'}).first(); await pause.click();
+  assert.equal(await page.getByRole('button',{name:'Resume coin ticker'}).first().getAttribute('aria-pressed'),'true');
+  await page.locator('#mining').scrollIntoViewIfNeeded();
+  await page.getByLabel('Equipment power').fill('3000');
+  await page.getByText('$7.20',{exact:true}).waitFor();
+  await page.locator('#news').scrollIntoViewIfNeeded();
+  await page.getByText('The news feed is temporarily unavailable.').waitFor();
+  for (const width of [1440,1024,768,390,320]) {
+    await page.setViewportSize({width,height:900});
+    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`overflow at ${width}`);
+  }
+  await page.setViewportSize({width:390,height:844});
+  await page.getByRole('button',{name:'Toggle navigation'}).click();
+  await page.locator('nav').getByRole('link',{name:'Mining',exact:true}).click();
+  assert.equal(await page.getByRole('button',{name:'Toggle navigation'}).getAttribute('aria-expanded'),'false');
+  await page.screenshot({path:'/tmp/valthera-landing-mobile.png',fullPage:true});
+  await page.setViewportSize({width:1440,height:1000});
+  await page.screenshot({path:'/tmp/valthera-landing-desktop.png',fullPage:true});
+  await page.emulateMedia({reducedMotion:'reduce'});
+  assert.equal(await page.locator('[class*="tickerTrack"]').first().evaluate(el=>getComputedStyle(el).animationName),'none');
+  await page.route('**/api/markets/*', route=>route.fulfill({status:503,json:{message:'Unavailable'}}));
+  await page.reload({waitUntil:'domcontentloaded'});
+  await page.getByText('Quote unavailable',{exact:true}).first().waitFor();
+  assert.deepEqual(errors,[]);
+  console.log('PASS: router controls, tickers, preloader, mining calculator, news failure, unavailable quotes, mobile navigation, five viewport sizes, reduced motion; no browser exceptions.');
+  await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});

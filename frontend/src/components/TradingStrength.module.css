@@ -1,0 +1,104 @@
+.panel {
+  border: 1px solid #b3f6aa20;
+  border-radius: 12px;
+  background:
+    radial-gradient(ellipse at right top, #b3f6aa09, transparent), var(--panel);
+  padding: 24px;
+  margin: 24px 0;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  font-size: 12px;
+}
+.top > span:first-child {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.top svg {
+  color: var(--mint);
+}
+.status {
+  font-size: 9px;
+  text-transform: capitalize;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 5px 10px;
+  color: var(--muted);
+}
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  margin: 22px 0;
+}
+.main strong {
+  font-size: 37px;
+  letter-spacing: -1px;
+  font-weight: 500;
+}
+.main small {
+  font-size: 13px;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+.main p {
+  font-size: 10px;
+  color: var(--muted);
+  margin: 5px 0;
+}
+.bars {
+  display: flex;
+  align-items: end;
+  gap: 5px;
+  width: 48%;
+  max-width: 280px;
+}
+.bars i {
+  flex: 1;
+  background: #ffffff09;
+  border-radius: 3px;
+  min-width: 2px;
+  transition: background 0.5s;
+}
+.bars .lit {
+  background: linear-gradient(#b3f6aa, #78a873);
+  box-shadow: 0 0 12px #b3f6aa15;
+}
+.progress {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  margin-bottom: 9px;
+  color: var(--muted);
+}
+.progress span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.progress strong {
+  color: var(--mint);
+  font-weight: 500;
+}
+.track {
+  height: 4px;
+  background: #ffffff08;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.track > span {
+  display: block;
+  height: 100%;
+  background: var(--mint);
+  transition: width 0.5s;
+}
+.note {
+  color: var(--muted);
+  font-size: 9px;
+  margin: 16px 0 0;
+}
