@@ -1,4 +1,8 @@
-export const money = (value) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(
-    Number(value) || 0,
-  );
+export const money = (value, symbol = "$") => {
+  const numericValue = Number(value) || 0;
+  const amount = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Math.abs(numericValue));
+  return `${numericValue < 0 ? "-" : ""}${symbol || "$"}${amount}`;
+};

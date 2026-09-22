@@ -307,6 +307,7 @@ CREATE TABLE `users` (
   `main_balance` decimal(24,2) NOT NULL DEFAULT 0.00,
   `profit_balance` decimal(24,2) NOT NULL DEFAULT 0.00,
   `investment_balance` decimal(24,2) NOT NULL DEFAULT 0.00,
+  `currency_symbol` varchar(8) NOT NULL DEFAULT '$',
   `withdraw_hold` decimal(24,2) NOT NULL DEFAULT 0.00,
   `pin_hash` varchar(255) DEFAULT NULL,
   `account_type` varchar(50) NOT NULL DEFAULT 'individual',

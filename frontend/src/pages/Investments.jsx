@@ -12,6 +12,7 @@ export default function Investments() {
     balances = useApi("/balances");
   const [selected, setSelected] = useState(null),
     [success, setSuccess] = useState("");
+  const currencySymbol = balances.data?.balances.currency_symbol || "$";
   const available = balances.data
     ? Math.max(
         0,
@@ -43,7 +44,7 @@ export default function Investments() {
                 <span>INVESTMENT PLAN</span>
                 <h2>{plan.name}</h2>
                 <p>Minimum investment</p>
-                <h3>{money(plan.price)}</h3>
+                <h3>{money(plan.price, currencySymbol)}</h3>
                 <dl>
                   <div>
                     <dt>Duration</dt>
@@ -81,7 +82,7 @@ export default function Investments() {
           <div className={s.planSummary}>
             <div>
               <span>Minimum</span>
-              <strong>{money(selected.price)}</strong>
+              <strong>{money(selected.price, currencySymbol)}</strong>
             </div>
             <div>
               <span>Duration</span>
@@ -89,7 +90,7 @@ export default function Investments() {
             </div>
             <div>
               <span>Available balance</span>
-              <strong>{balances.data ? money(available) : "—"}</strong>
+              <strong>{balances.data ? money(available, currencySymbol) : "—"}</strong>
             </div>
           </div>
           <Status
@@ -101,7 +102,7 @@ export default function Investments() {
             (available < Number(selected.price) ? (
               <div className={s.funding}>
                 <p>
-                  This plan starts at {money(selected.price)}. Add funds to your
+                  This plan starts at {money(selected.price, currencySymbol)}. Add funds to your
                   wallet to invest.
                 </p>
                 <Button to="/app/wallet" onClick={() => setSelected(null)}>
@@ -183,7 +184,7 @@ export default function Investments() {
                       <td>
                         {item.plan_name || item.name || `Plan #${item.plan_id}`}
                       </td>
-                      <td>{money(item.amount)}</td>
+                      <td>{money(item.amount, currencySymbol)}</td>
                       <td>
                         <span className={s.badge}>{item.status}</span>
                       </td>

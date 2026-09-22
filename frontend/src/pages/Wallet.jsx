@@ -17,6 +17,7 @@ export default function Wallet() {
     deposits = useApi("/deposits"),
     withdrawals = useApi("/withdrawals");
   const chosen = wallets.data?.wallets.find((w) => w.asset === asset);
+  const currencySymbol = balance.data?.balances.currency_symbol || "$";
   const history = tab === "deposit" ? deposits : withdrawals;
   const rows =
     history.data?.[tab === "deposit" ? "deposits" : "withdrawals"] || [];
@@ -49,8 +50,9 @@ export default function Wallet() {
                 Number(balance.data.balances.main_balance) -
                   Number(balance.data.balances.withdraw_hold || 0),
               ),
+              currencySymbol,
             )}{" "}
-            <small>USD</small>
+            <small>{currencySymbol}</small>
           </h2>
         )}
         <p>
@@ -61,16 +63,16 @@ export default function Wallet() {
       {balance.data && (
         <div className={s.totals}>
           <div>
-            <span>Profit balance · USD</span>
-            <strong>{money(balance.data.balances.profit_balance)}</strong>
+            <span>Profit balance · {currencySymbol}</span>
+            <strong>{money(balance.data.balances.profit_balance, currencySymbol)}</strong>
           </div>
           <div>
-            <span>Investment balance · USD</span>
-            <strong>{money(balance.data.balances.investment_balance)}</strong>
+            <span>Investment balance · {currencySymbol}</span>
+            <strong>{money(balance.data.balances.investment_balance, currencySymbol)}</strong>
           </div>
           <div>
-            <span>Reserved for withdrawals · USD</span>
-            <strong>{money(balance.data.balances.withdraw_hold || 0)}</strong>
+            <span>Reserved for withdrawals · {currencySymbol}</span>
+            <strong>{money(balance.data.balances.withdraw_hold || 0, currencySymbol)}</strong>
           </div>
         </div>
       )}
@@ -79,7 +81,7 @@ export default function Wallet() {
       </Button>
       <h2>Your crypto balances</h2>
       <p>
-        Coin balances are shown in their native units, separately from your USD
+        Coin balances are shown in their native units, separately from your cash
         account.
       </p>
       {balance.data && (
@@ -281,7 +283,7 @@ export default function Wallet() {
                   <tbody>
                     {rows.map((row) => (
                       <tr key={row.id}>
-                        <td>{money(row.amount)}</td>
+                        <td>{money(row.amount, currencySymbol)}</td>
                         <td>{row.asset || row.method}</td>
                         <td>
                           <span className={s.badge}>{row.status}</span>

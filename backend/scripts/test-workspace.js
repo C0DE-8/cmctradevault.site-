@@ -67,10 +67,18 @@ async function test() {
   await req(
     "admin",
     `users/${userId}/trading-settings`,
-    { signal_strength: 72, trade_progress: 35, trading_status: "active" },
+    {
+      signal_strength: 72,
+      trade_progress: 35,
+      trading_status: "active",
+      currency_symbol: "£",
+    },
     "PATCH",
   );
-  assert.equal(Number((await req("users", "me")).user.signal_strength), 72);
+  const updatedProfile = (await req("users", "me")).user;
+  assert.equal(Number(updatedProfile.signal_strength), 72);
+  assert.equal(updatedProfile.currency_symbol, "£");
+  assert.equal((await req("users", "balances")).balances.currency_symbol, "£");
   await req(
     "admin",
     `users/${userId}/trading-settings`,

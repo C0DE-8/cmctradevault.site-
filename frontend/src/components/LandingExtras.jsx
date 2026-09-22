@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FiArrowUpRight, FiActivity, FiCpu, FiPause, FiPlay, FiArrowRight, FiMessageCircle } from "react-icons/fi";
 import { Button, ArrowLink } from "./UI";
+import { testimonials } from "../data/testimonials";
 import { getMarket } from "../api/tradingView";
 import s from "../pages/Landing.module.css";
 
@@ -58,6 +59,7 @@ function NewsFeed() {
       if (!entry.isIntersecting) return;
       observer.disconnect();
       const wrapper = document.createElement("div");
+      wrapper.className = "tradingview-widget-container";
       wrapper.style.height = "100%";
       const target = document.createElement("div");
       target.className = "tradingview-widget-container__widget";
@@ -76,7 +78,7 @@ function NewsFeed() {
       const script = document.createElement("script");
       script.src = "https://s3.tradingview.com/external-embedding/embed-widget-timeline.js";
       script.async = true;
-      script.textContent = JSON.stringify({ feedMode: "symbol", symbol: "BITSTAMP:BTCUSD", colorTheme: "dark", isTransparent: true, displayMode: "regular", width: "100%", height: "100%", locale: "en" });
+      script.textContent = JSON.stringify({ feedMode: "symbol", symbol: "BITSTAMP:BTCUSD", colorTheme: "dark", isTransparent: false, displayMode: "regular", width: "100%", height: "100%", locale: "en" });
       script.onerror = () => { if (active) { clearTimeout(timeout); setStatus("error"); } };
       wrapper.appendChild(script);
       cleanup = () => { active = false; clearTimeout(timeout); mutation.disconnect(); wrapper.remove(); };
@@ -84,7 +86,7 @@ function NewsFeed() {
     observer.observe(host);
     return () => { observer.disconnect(); cleanup(); };
   }, []);
-  return <div className={s.newsFeedWrap}><div ref={ref} className={s.newsFeed} />{status !== "ready" && <div className={s.newsStatus} role="status">{status === "loading" ? "Connecting to Bitcoin headlines…" : "The news feed is temporarily unavailable."}<a href="https://www.tradingview.com/symbols/BTCUSD/news/" target="_blank" rel="noreferrer">Read Bitcoin news on TradingView <FiArrowUpRight /></a></div>}</div>;
+  return <div className={s.newsFeedWrap}><div className={s.newsFeedHeading}><span><FiActivity /> BITCOIN / NEWSROOM</span><a href="https://www.tradingview.com/symbols/BTCUSD/news/" target="_blank" rel="noreferrer">All stories <FiArrowUpRight /></a></div><div ref={ref} className={s.newsFeed} />{status !== "ready" && <div className={s.newsStatus} role="status">{status === "loading" ? "Connecting to Bitcoin headlines…" : "The news feed is temporarily unavailable."}<a href="https://www.tradingview.com/symbols/BTCUSD/news/" target="_blank" rel="noreferrer">Read Bitcoin news on TradingView <FiArrowUpRight /></a></div>}</div>;
 }
 export function BitcoinNews() {
   return <section className={s.section} id="news"><div className={s.sectionHeading}><div><span className={s.eyebrow}>BEYOND THE PRICE</span><h2>A little context.<br />A clearer perspective.</h2></div><p>Bitcoin headlines from TradingView.<br />Follow the story behind the market.</p></div><div className={s.newsLayout}><NewsFeed /><aside className={s.newsAside}><span className={s.eyebrow}>THE BITCOIN BRIEF</span><h3>Read the news.<br />Then read the market.</h3><p>Put a headline in context before making your next move.</p>{[["01", "Check the source", "Look for the original report and its publication date."], ["02", "Zoom out", "Compare short-term moves with a longer chart timeframe."], ["03", "Know your exposure", "Review the amount and possible loss before placing a trade."]].map(([n, title, text]) => <div key={n}><span>{n}</span><div><strong>{title}</strong><p>{text}</p></div></div>)}<a href="https://www.tradingview.com/symbols/BTCUSD/news/" target="_blank" rel="noreferrer">Bitcoin news on TradingView <FiArrowUpRight /></a></aside></div></section>;
@@ -92,9 +94,38 @@ export function BitcoinNews() {
 
 export function MiningSection() {
   const [power, setPower] = useState(100);
-  return <section className={s.section} id="mining"><div className={s.miningPanel}><div className={s.miningCopy}><span className={s.eyebrow}>THE NEXT CHAPTER · MINING</span><h2>Another way to<br />explore crypto.</h2><p>A dedicated home for crypto mining is planned for Valthera. Get to know the essentials now, from computing power to the costs behind it.</p><span className={s.availability}>Coming soon · Mining is not active</span><div className={s.miningFacts}><div><FiCpu /><strong>Understand hash power</strong><p>Hash rate measures the computing work a miner can perform.</p></div><div><FiActivity /><strong>Look beyond rewards</strong><p>Electricity, equipment, pool fees, and network difficulty all matter.</p></div></div><a href="https://bitcoin.org/en/how-it-works" target="_blank" rel="noreferrer">Learn how Bitcoin mining works <FiArrowUpRight /></a></div><div className={s.miningPreview}><div className={s.previewTop}><FiCpu /><span>MINING EXPLORER</span><small>ILLUSTRATION</small></div><div className={s.miningArt} aria-hidden="true">{[0,1,2].map(n => <div key={n}><span /><i /><i /><b>V / 0{n+1}</b></div>)}</div><h3>See what power costs.</h3><p>Try an electricity cost example. This is not an earnings estimate.</p><label htmlFor="mining-power">Equipment power <strong>{power.toLocaleString()} W</strong></label><input id="mining-power" type="range" min="100" max="5000" step="100" value={power} onChange={e => setPower(Number(e.target.value))} /><div className={s.costResult}><span>Estimated electricity / day<small>24 hours at an illustrative $0.10 / kWh</small></span><strong>${(power / 1000 * 24 * .1).toFixed(2)}</strong></div><small>No equipment is connected. No coins are being mined.</small></div></div></section>;
+  return <section className={s.section} id="mining"><div className={s.miningPanel}><div className={s.miningCopy}><span className={s.eyebrow}>THE NEXT CHAPTER · MINING</span><h2>Another way to<br />explore crypto.</h2><p>A dedicated home for crypto mining is planned for Valthera. Get to know the essentials now, with a preview of the proposed rewards model.</p><span className={s.availability}>Coming soon · Mining is not active</span><div className={s.miningFacts}><div><FiCpu /><strong>Explore your power level</strong><p>Start at 100 W for an illustrative $0.10 per hour. Increase power to explore a higher proposed rate.</p></div><div><FiActivity /><strong>A full day in perspective</strong><p>At 100 W, a 24-hour run projects $2.40 before costs under this model. Actual mining results are not determined by watts alone.</p></div></div><a href="https://bitcoin.org/en/how-it-works" target="_blank" rel="noreferrer">Learn how Bitcoin mining works <FiArrowUpRight /></a></div><div className={s.miningPreview}><div className={s.previewTop}><FiCpu /><span>MINING EXPLORER</span><small>ILLUSTRATION</small></div><div className={s.miningArt} aria-hidden="true">{[0,1,2].map(n => <div key={n}><span /><i /><i /><b>V / 0{n+1}</b></div>)}</div><h3>More power. More potential.</h3><p>Explore the proposed rate: $0.10 per hour for every 100 W. This is an illustration, not a guaranteed return.</p><label htmlFor="mining-power">Equipment power <strong>{power.toLocaleString()} W</strong></label><input id="mining-power" type="range" min="100" max="5000" step="100" value={power} onChange={e => setPower(Number(e.target.value))} /><div className={s.rewardRate}><span>Illustrative hourly reward</span><strong>${(power / 100 * .1).toFixed(2)}<small> / hour</small></strong></div><div className={s.costResult}><span>Projected reward / 24 hours<small>Before costs · proposed platform model</small></span><strong>${(power / 100 * 24 * .1).toFixed(2)}</strong></div><small>No equipment is connected. No coins are being mined.</small></div></div></section>;
 }
 
 export function CommunitySection() {
-  return <section className={s.section} id="testimonials"><div className={s.sectionHeading}><div><span className={s.eyebrow}>THE PEOPLE BEHIND THE PROGRESS</span><h2>Your experience.<br />Our next chapter.</h2></div><p>A space for real voices from our community.</p></div><div className={s.communityPanel}><div className={s.communityIcon}><FiMessageCircle /></div><div><span className={s.eyebrow}>COMMUNITY TESTIMONIALS</span><h3>Real stories deserve a real place.</h3><p>Verified customer stories will appear here as they become available. In the meantime, explore the platform and form your own first impression.</p></div><ArrowLink to="/preview">Take a look inside</ArrowLink></div></section>;
+  const [active, setActive] = useState(0);
+  return (
+    <section className={s.section} id="testimonials">
+      <div className={s.sectionHeading}>
+        <div><span className={s.eyebrow}>COMMUNITY TESTIMONIALS</span><h2>Your experience.<br />Our next chapter.</h2></div>
+        <p>Perspectives from the Valthera community.</p>
+      </div>
+      <div className={s.testimonialLayout}>
+        <div className={s.testimonialIntro}>
+          <FiMessageCircle />
+          <h3>A clearer journey.<br />From portfolio to wallet.</h3>
+          <p>Explore the experiences shared by our community, from following a portfolio to making a withdrawal.</p>
+          <ArrowLink to="/preview">Take a look inside</ArrowLink>
+        </div>
+        <div>
+          <div className={s.testimonialStack}>
+            {testimonials.map((story, i) => {
+              const position = (i - active + testimonials.length) % testimonials.length;
+              return <article key={story.name} className={s.testimonialCard} style={{ "--stack-position": Math.min(position, 2), zIndex: testimonials.length - position }} aria-hidden={position !== 0}>
+                <header><span className={s.storyAvatar}>{story.name.split(" ").map(part => part[0]).join("")}</span><div><strong>{story.name}</strong><small>{story.location}</small></div></header>
+                <blockquote>“{story.text}”</blockquote>
+                <footer><div><span>Reported withdrawal</span><strong>{story.amount}</strong></div></footer>
+              </article>;
+            })}
+          </div>
+          <div className={s.storyControls}><span aria-live="polite">Story {active + 1} / {testimonials.length}</span><div><button onClick={() => setActive((active - 1 + testimonials.length) % testimonials.length)} aria-label="Previous testimonial">←</button><button onClick={() => setActive((active + 1) % testimonials.length)} aria-label="Next testimonial"><FiArrowRight /></button></div></div>
+        </div>
+      </div>
+    </section>
+  );
 }

@@ -75,6 +75,7 @@ async function migrateUsers() {
         main_balance DECIMAL(24,2) NOT NULL DEFAULT 0.00,
         profit_balance DECIMAL(24,2) NOT NULL DEFAULT 0.00,
         investment_balance DECIMAL(24,2) NOT NULL DEFAULT 0.00,
+        currency_symbol VARCHAR(8) NOT NULL DEFAULT '$',
         withdraw_hold DECIMAL(24,2) NOT NULL DEFAULT 0.00,
         pin_hash VARCHAR(255) NULL,
         account_type VARCHAR(50) NOT NULL DEFAULT 'individual',
@@ -103,6 +104,7 @@ async function migrateUsers() {
   await addColumn("users", "profit_balance", "DECIMAL(24,2) NOT NULL DEFAULT 0.00");
   await addColumn("users", "investment_balance", "DECIMAL(24,2) NOT NULL DEFAULT 0.00");
   await addColumn("users", "withdraw_hold", "DECIMAL(24,2) NOT NULL DEFAULT 0.00");
+  await addColumn("users", "currency_symbol", "VARCHAR(8) NOT NULL DEFAULT '$'");
   await addColumn("users", "pin_hash", "VARCHAR(255) NULL");
   await addColumn("users", "trade_progress", "DECIMAL(5,2) NOT NULL DEFAULT 0.00");
   await addColumn("users", "account_status", "VARCHAR(30) NOT NULL DEFAULT 'active'");

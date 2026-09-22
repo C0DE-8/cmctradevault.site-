@@ -19,8 +19,8 @@ export default function BalanceManager({ userId, onUpdate }) {
           <div className={s.cash}>
             {cashBalances.map((key) => (
               <div key={key}>
-                <span>{key.replaceAll("_", " ")} · USD</span>
-                <strong>{money(user[key])}</strong>
+                <span>{key.replaceAll("_", " ")} · {user.currency_symbol || "$"}</span>
+                <strong>{money(user[key], user.currency_symbol)}</strong>
               </div>
             ))}
           </div>
@@ -45,7 +45,7 @@ export default function BalanceManager({ userId, onUpdate }) {
             <Field label="Balance to adjust" name="balance_key" as="select">
               {cashBalances.map((key) => (
                 <option key={key} value={key}>
-                  {key.replaceAll("_", " ")} (USD)
+                  {key.replaceAll("_", " ")} ({user.currency_symbol || "$"})
                 </option>
               ))}
               {assets.map((asset) => (

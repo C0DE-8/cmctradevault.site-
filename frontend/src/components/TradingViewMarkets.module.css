@@ -48,11 +48,16 @@
   background: linear-gradient(140deg, #1a251b80, #111813);
   transition:
     border-color 0.3s,
-    transform 0.3s;
+    transform 0.3s,
+    box-shadow 0.3s;
 }
-.card:hover {
-  border-color: #b3f6aa48;
-  transform: translateY(-4px);
+.card:focus-within { border-color: #b3f6aa65; }
+@media (hover: hover) and (pointer: fine) {
+  .card:hover { border-color: #b3f6aa60; transform: translateY(-4px); box-shadow: 0 16px 32px #0004; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+  .card:hover { transform: none; }
 }
 .card header {
   display: flex;

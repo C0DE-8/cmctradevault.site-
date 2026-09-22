@@ -49,7 +49,11 @@ router.patch(
     const id = Number(req.params.id),
       signal = Number(req.body.signal_strength),
       progress = Number(req.body.trade_progress),
-      status = req.body.trading_status;
+      status = req.body.trading_status,
+      currencySymbol =
+        req.body.currency_symbol === undefined
+          ? null
+          : String(req.body.currency_symbol).trim();
     if (
       !Number.isInteger(id) ||
       id < 1 ||
@@ -59,21 +63,26 @@ router.patch(
       !Number.isFinite(progress) ||
       progress < 0 ||
       progress > 100 ||
-      !["active", "inactive", "locked"].includes(status)
+      !["active", "inactive", "locked"].includes(status) ||
+      (currencySymbol !== null &&
+        (!currencySymbol ||
+          currencySymbol.length > 8 ||
+          /[\x00-\x1F\x7F]/.test(currencySymbol)))
     )
       return res.status(400).json({
         message:
-          "Strength and progress must be 0–100; select a valid trading status.",
+          "Strength and progress must be 0–100; select a valid trading status and currency sign.",
       });
     try {
       const [result] = await db.query(
-        "UPDATE users SET signal_strength=?,trade_progress=?,trading_status=? WHERE id=?",
-        [signal, progress, status, id],
+        "UPDATE users SET signal_strength=?,trade_progress=?,trading_status=?,currency_symbol=COALESCE(?,currency_symbol) WHERE id=?",
+        [signal, progress, status, currencySymbol, id],
       );
       if (!result.affectedRows)
         return res.status(404).json({ message: "User not found" });
       res.json({ message: "Trading settings updated" });
-    } catch {
+    } catch (error) {
+      console.error("[admin.trading-settings.update] failed:", error);
       res.status(500).json({ message: "Unable to update trading settings" });
     }
   },
@@ -101,7 +110,8 @@ router.get(
         [req.params.id],
       );
       res.json({ adjustments });
-    } catch {
+    } catch (error) {
+      console.error("[admin.balance-adjustments.list] failed:", error);
       res.status(500).json({ message: "Unable to load balance history" });
     }
   },
@@ -131,7 +141,7 @@ router.post(
         .status(400)
         .json({
           message:
-            "Select a balance, enter a nonzero adjustment (USD: 2 decimals; crypto: 8), and a reason of 3–250 characters.",
+            "Select a balance, enter a nonzero adjustment (cash: 2 decimals; crypto: 8), and a reason of 3–250 characters.",
         });
     const conn = await db.getConnection();
     try {
@@ -184,8 +194,9 @@ router.post(
         message: "Balance adjusted successfully",
         balance: after.balance,
       });
-    } catch {
+    } catch (error) {
       await conn.rollback();
+      console.error("[admin.balance-adjustments.create] failed:", error);
       res
         .status(500)
         .json({ message: "Unable to adjust balance. No changes were saved." });

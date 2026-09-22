@@ -63,10 +63,10 @@ Run `npm run test:local` with both services running to check actual SQL login, n
 
 ### Expanded landing page
 
-The landing page retains the existing dark green / mint design and adds trading approach controls, two automatically scrolling coin strips, a lazy-loaded TradingView Bitcoin news feed, a mining electricity-cost explorer, community testimonials availability, and additional FAQs. The brand preloader clears after 350 ms (immediately with reduced motion).
+The landing page retains the existing dark green / mint design and adds trading approach controls, two automatically scrolling coin strips, a lazy-loaded TradingView Bitcoin news feed, a mining rewards explorer, community testimonials availability, and additional FAQs. The brand preloader clears after 350 ms (immediately with reduced motion).
 
 The public market endpoint supports BTC, ETH, SOL, XRP, ADA, DOGE, AVAX, and LINK in USDT. Restart the backend to pick up the expanded allowlist. Quotes refresh every minute; failed requests display an unavailable state and cached provider responses can be marked delayed.
 
-Mining is a frontend preview, explicitly marked coming soon. It does not connect hardware, mine coins, or credit balances. The electricity calculator uses an illustrative $0.10/kWh over 24 hours. Customer testimonials are not fabricated: the community section awaits verified, approved stories.
+Mining is a frontend preview, explicitly marked coming soon. It does not connect hardware, mine coins, or credit balances. The rewards calculator illustrates the proposed $0.10/hour per 100 W model over 24 hours, before costs; it is not a guarantee or actual mining yield. Community cards display 21 site-owner-supplied testimonials from `src/data/testimonials.js`, preserving the supplied names, locations, currencies, and quotes. These statements were not independently verified. No verified badge or wallet destination is inferred.
 
-Run `npm run test:landing` with the frontend at http://127.0.0.1:5173. Set `PLAYWRIGHT_EXECUTABLE_PATH` if using an existing Chrome installation. Tests mock market quotes and an unavailable news feed, check trading controls, pause controls, the cost calculator, mobile navigation, reduced motion, and overflow at five widths.
+Run `npm run test:landing` with the frontend at http://127.0.0.1:5173. Set `PLAYWRIGHT_EXECUTABLE_PATH` if using an existing Chrome installation. Tests mock market quotes and an unavailable news feed, check trading controls, pause controls, the rewards calculator and testimonial navigation, mobile navigation, reduced motion, and overflow at five widths.

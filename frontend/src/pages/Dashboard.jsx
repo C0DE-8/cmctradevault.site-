@@ -57,6 +57,7 @@ function LiveDashboard() {
   );
 }
 function Overview({ user, preview = false, investments }) {
+  const currencySymbol = user.currency_symbol || "$";
   const total =
     Number(user.main_balance || 0) +
     Number(user.profit_balance || 0) +
@@ -86,9 +87,9 @@ function Overview({ user, preview = false, investments }) {
               <span>{label}</span>
               <Icon />
             </div>
-            <h2>{money(value)}</h2>
+            <h2>{money(value, currencySymbol)}</h2>
             <span className={s.statNote}>
-              {preview ? "Illustrative balance" : "Account balance · USD"}
+              {preview ? "Illustrative balance" : `Account balance · ${currencySymbol}`}
             </span>
           </article>
         ))}
@@ -100,7 +101,7 @@ function Overview({ user, preview = false, investments }) {
             <h3>Portfolio overview</h3>
             <span>{preview ? "ILLUSTRATIVE" : "TOTAL BALANCE"}</span>
           </div>
-          <h2 className={s.total}>{money(total)}</h2>
+          <h2 className={s.total}>{money(total, currencySymbol)}</h2>
           <p className={s.sub}>
             {preview ? (
               <>
@@ -131,7 +132,7 @@ function Overview({ user, preview = false, investments }) {
                 <div key={label}>
                   <div>
                     <span>{label}</span>
-                    <strong>{money(value)}</strong>
+                    <strong>{money(value, currencySymbol)}</strong>
                   </div>
                   <div className={s.track}>
                     <span
@@ -195,7 +196,7 @@ function Overview({ user, preview = false, investments }) {
                   {investments.slice(0, 4).map((item) => (
                     <tr key={item.id}>
                       <td>{item.plan_name || `Plan #${item.plan_id}`}</td>
-                      <td>{money(item.amount)}</td>
+                      <td>{money(item.amount, currencySymbol)}</td>
                       <td>
                         <span className={s.badge}>{item.status}</span>
                       </td>

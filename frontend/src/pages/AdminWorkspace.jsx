@@ -326,8 +326,8 @@ function Investors() {
                         <strong>{u.full_name}</strong>
                         <small>{u.email}</small>
                       </td>
-                      <td>{money(u.main_balance)}</td>
-                      <td>{money(u.investment_balance)}</td>
+                      <td>{money(u.main_balance, u.currency_symbol)}</td>
+                      <td>{money(u.investment_balance, u.currency_symbol)}</td>
                       <td>{Number(u.signal_strength)} / 100</td>
                       <td>{u.account_status}</td>
                       <td>
@@ -365,6 +365,14 @@ function Investors() {
               setSelected(null);
             }}
           >
+            <Field
+              label="Account currency sign"
+              name="currency_symbol"
+              maxLength="8"
+              defaultValue={selected.currency_symbol || "$"}
+              placeholder="$, £, €, ¥, or another sign"
+              required
+            />
             <Field
               label="Signal strength (0–100)"
               name="signal_strength"

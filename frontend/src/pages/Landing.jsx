@@ -292,7 +292,7 @@ export default function Landing() {
                 ],
                 [
                   "Can I mine crypto on Valthera today?",
-                  "Mining is planned and is not active yet. The mining explorer is an educational electricity-cost illustration, not a connected miner or a promise of rewards. Availability and terms will be shared before launch.",
+                  "Mining is planned and is not active yet. The mining explorer is an illustration of a proposed rewards model ($0.10 per hour per 100 W), not a connected miner or a promise of rewards. Availability and terms will be shared before launch.",
                 ],
                 [
                   "Are the news and prices live?",
