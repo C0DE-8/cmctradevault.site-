@@ -13,6 +13,13 @@ import {
   FiCheck,
   FiPause,
   FiPlay,
+  FiLock,
+  FiZap,
+  FiGlobe,
+  FiChevronLeft,
+  FiChevronRight,
+  FiPieChart,
+  FiRefreshCw,
 } from "react-icons/fi";
 import { SiBitcoin, SiEthereum } from "react-icons/si";
 import { Brand, Button, ArrowLink } from "../components/UI";
@@ -25,6 +32,14 @@ export default function Landing() {
   const [menu, setMenu] = useState(false);
   const [motionPaused, setMotionPaused] = useState(false);
   const [ready, setReady] = useState(false);
+  const [showcase, setShowcase] = useState(0);
+  const showcaseSlides = [
+    { tag: "01 · COMMAND CENTER", title: "Your entire portfolio, in one clear view.", text: "Follow balances, active strategies, recent activity, and market movement without losing the bigger picture.", metric: "$48,294.80", label: "Portfolio value", change: "+12.4%", icon: FiPieChart, bars: [34, 45, 40, 58, 52, 70, 64, 83, 78, 96] },
+    { tag: "02 · MARKET INTELLIGENCE", title: "See the signal before your next move.", text: "Explore focused market data, chart context, and asset performance from a workspace designed to reduce noise.", metric: "24 / 7", label: "Market access", change: "LIVE", icon: FiActivity, bars: [76, 58, 63, 48, 56, 42, 60, 68, 81, 92] },
+    { tag: "03 · STRATEGY HUB", title: "Put every strategy on the same map.", text: "Compare investments, trading positions, and copy activity with clear status updates and a unified history.", metric: "3", label: "Active strategies", change: "SYNCED", icon: FiRefreshCw, bars: [28, 38, 52, 48, 65, 59, 72, 68, 86, 94] },
+  ];
+  const activeShowcase = showcaseSlides[showcase];
+  const ShowcaseIcon = activeShowcase.icon;
   return (
     <>
       {!ready && <SitePreloader onReady={setReady} />}
@@ -231,6 +246,51 @@ export default function Landing() {
               <ArrowLink to="/register">Explore investments</ArrowLink>
             </div>
             <TradingViewMarkets />
+          </section>
+          <section className={`${s.section} ${s.showcaseSection}`} id="platform">
+            <div className={s.sectionHeading}>
+              <div><span className={s.eyebrow}>INSIDE THE VAULT</span><h2>One platform.<br />Every decisive view.</h2></div>
+              <div className={s.slideControls}>
+                <button onClick={() => setShowcase((showcase - 1 + showcaseSlides.length) % showcaseSlides.length)} aria-label="Previous platform view"><FiChevronLeft /></button>
+                <span aria-live="polite">0{showcase + 1} / 0{showcaseSlides.length}</span>
+                <button onClick={() => setShowcase((showcase + 1) % showcaseSlides.length)} aria-label="Next platform view"><FiChevronRight /></button>
+              </div>
+            </div>
+            <div className={s.showcasePanel}>
+              <div className={s.showcaseCopy} key={`${showcase}-copy`}>
+                <span className={s.eyebrow}>{activeShowcase.tag}</span>
+                <h3>{activeShowcase.title}</h3><p>{activeShowcase.text}</p>
+                <ArrowLink to="/preview">Open platform preview</ArrowLink>
+                <div className={s.slideDots}>{showcaseSlides.map((slide, i) => <button key={slide.tag} onClick={() => setShowcase(i)} aria-label={`Show ${slide.title}`} aria-pressed={showcase === i} />)}</div>
+              </div>
+              <div className={s.productWindow} key={`${showcase}-window`}>
+                <div className={s.windowTop}><span><i /><i /><i /></span><b>TRADEVAULT / OVERVIEW</b><small>SECURE SESSION</small></div>
+                <div className={s.windowBody}>
+                  <div className={s.windowMetric}><span><ShowcaseIcon /> {activeShowcase.label}</span><strong>{activeShowcase.metric}</strong><small>{activeShowcase.change}</small></div>
+                  <div className={s.windowChart}><span>PERFORMANCE</span><div>{activeShowcase.bars.map((height, i) => <i key={i} style={{ height: `${height}%` }} />)}</div></div>
+                  <div className={s.windowRows}>{["Bitcoin / BTC", "Ethereum / ETH", "Solana / SOL"].map((asset, i) => <div key={asset}><span className={s.assetOrb}>{asset[0]}</span><strong>{asset}</strong><small>{["+2.48%", "+1.16%", "+4.02%"][i]}</small></div>)}</div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section className={`${s.section} ${s.securitySection}`}>
+            <div className={s.securityLead}>
+              <span className={s.eyebrow}>TRUST, BUILT INTO THE EXPERIENCE</span>
+              <h2>Designed to keep clarity in—and uncertainty out.</h2>
+              <p>Security is more than a badge. It is a series of thoughtful controls, visible account activity, and review steps around important actions.</p>
+              <Button to="/register">Create a secure account <FiArrowUpRight /></Button>
+            </div>
+            <div className={s.securityGrid}>
+              <article className={s.securityPrimary}><FiLock /><span>ACCOUNT PROTECTION</span><h3>Control starts with verification.</h3><p>Identity checks and account review help keep your workspace connected to you.</p><div className={s.securityRings}><i /><i /><b><FiCheck /></b></div></article>
+              <article><FiActivity /><span>VISIBLE ACTIVITY</span><h3>Every request has a status.</h3><p>Follow deposits, withdrawals, and account activity from one history.</p></article>
+              <article><FiGlobe /><span>ALWAYS-ON VIEW</span><h3>Built for global markets.</h3><p>Watch supported assets and your workspace across devices.</p></article>
+            </div>
+          </section>
+          <section className={`${s.section} ${s.ecosystemSection}`}>
+            <div className={s.ecosystemHeader}><span className={s.eyebrow}>YOUR TRADEVAULT ECOSYSTEM</span><h2>Start focused.<br />Expand when you’re ready.</h2><p>Build a workspace around the way you want to engage with digital markets.</p></div>
+            <div className={s.ecosystemRail}>
+              {[{n:"01",icon:FiPieChart,title:"Build your core",text:"Fund your account and bring your balances into one organized portfolio view."},{n:"02",icon:FiActivity,title:"Read the market",text:"Explore supported assets, price movement, and chart context before acting."},{n:"03",icon:FiZap,title:"Choose a strategy",text:"Compare investment, trading, and copy options with their details in view."},{n:"04",icon:FiRefreshCw,title:"Stay in control",text:"Review activity, follow status updates, and adjust your next move over time."}].map(({n,icon:Icon,title,text}) => <article key={n}><div><span>{n}</span><Icon /></div><h3>{title}</h3><p>{text}</p><FiArrowRight /></article>)}
+            </div>
           </section>
           <BitcoinNews />
           <MiningSection />
