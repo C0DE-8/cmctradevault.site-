@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b100e"/><stop offset="1" stop-color="#16251b"/></linearGradient><radialGradient id="r"><stop stop-color="#b3f6aa" stop-opacity=".25"/><stop offset="1" stop-color="#b3f6aa" stop-opacity="0"/></radialGradient></defs>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#050816"/><stop offset="1" stop-color="#16103b"/></linearGradient><radialGradient id="r"><stop stop-color="#8b5cf6" stop-opacity=".32"/><stop offset="1" stop-color="#31e6ff" stop-opacity="0"/></radialGradient></defs>
   <rect width="1200" height="630" fill="url(#g)"/><circle cx="1000" cy="80" r="420" fill="url(#r)"/>
-  <path d="M780 460c80-210 250-270 390-300M720 510c120-180 270-220 430-200" fill="none" stroke="#b3f6aa" stroke-opacity=".22" stroke-width="2"/>
-  <circle cx="995" cy="180" r="72" fill="#b3f6aa" fill-opacity=".1" stroke="#b3f6aa" stroke-width="2"/><text x="995" y="204" text-anchor="middle" font-family="Arial,sans-serif" font-size="76" font-weight="700" fill="#b3f6aa">₿</text>
-  <text x="86" y="120" font-family="Arial,sans-serif" font-size="18" letter-spacing="6" fill="#b3f6aa">VALTHERA INVESTMENTS</text>
-  <text x="86" y="260" font-family="Arial,sans-serif" font-size="66" font-weight="600" fill="#f1f7f1">A little vision.</text><text x="86" y="340" font-family="Arial,sans-serif" font-size="66" font-weight="600" fill="#b3f6aa">A bigger future.</text>
-  <text x="90" y="410" font-family="Arial,sans-serif" font-size="22" fill="#a8b5ab">Explore digital assets. See your next move clearly.</text>
-  <rect x="86" y="492" width="205" height="3" fill="#b3f6aa"/><text x="86" y="540" font-family="Arial,sans-serif" font-size="15" letter-spacing="3" fill="#a8b5ab">YOUR FUTURE. MORE POSSIBILITIES.</text>
+  <path d="M780 460c80-210 250-270 390-300M720 510c120-180 270-220 430-200" fill="none" stroke="#31e6ff" stroke-opacity=".22" stroke-width="2"/>
+  <path d="M995 101 1060 139v82l-65 38-65-38v-82l65-38Z" fill="#31e6ff" fill-opacity=".08" stroke="#31e6ff" stroke-width="3"/><path d="m965 151 30-17 30 17v57l-30 17-30-17v-57Z" fill="none" stroke="#f4f7ff" stroke-width="3"/><circle cx="995" cy="180" r="7" fill="#8b5cf6"/>
+  <text x="86" y="120" font-family="Arial,sans-serif" font-size="18" letter-spacing="6" fill="#31e6ff">CMC TRADEVAULT</text>
+  <text x="86" y="260" font-family="Arial,sans-serif" font-size="66" font-weight="600" fill="#f1f7f1">Trade the future.</text><text x="86" y="340" font-family="Arial,sans-serif" font-size="66" font-weight="600" fill="#31e6ff">Secure the edge.</text>
+  <text x="90" y="410" font-family="Arial,sans-serif" font-size="22" fill="#aeb8d4">One intelligent vault for the always-on digital economy.</text>
+  <rect x="86" y="492" width="205" height="3" fill="#31e6ff"/><text x="86" y="540" font-family="Arial,sans-serif" font-size="15" letter-spacing="3" fill="#aeb8d4">DIGITAL MARKETS. SECURED BY DESIGN.</text>
 </svg>

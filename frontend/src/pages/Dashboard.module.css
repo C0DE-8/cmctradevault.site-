@@ -101,7 +101,7 @@
 }
 .next {
   background:
-    radial-gradient(ellipse at 80% 50%, #b3f6aa13, transparent), #172219;
+    radial-gradient(ellipse at 80% 50%, #31e6ff13, transparent), #172219;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -132,7 +132,7 @@
   z-index: 1;
 }
 .nextArt {
-  color: #b3f6aa50;
+  color: #31e6ff50;
   font-size: 85px;
   align-self: end;
   transform: rotate(-15deg);
@@ -212,7 +212,7 @@
   overflow: auto;
 }
 .badge {
-  background: #b3f6aa12;
+  background: #31e6ff12;
   color: var(--mint);
   border-radius: 5px;
   padding: 4px 7px;

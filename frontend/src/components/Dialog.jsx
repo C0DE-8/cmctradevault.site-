@@ -31,7 +31,7 @@ export default function Dialog({ title, children, onClose }) {
       <div className={s.inner}>
         <header>
           <div>
-            <span>VALTHERA INVESTMENTS</span>
+            <span>CMC TRADEVAULT</span>
             <h2 id={id}>{title}</h2>
           </div>
           <button type="button" onClick={onClose} aria-label="Close dialog">

@@ -1,8 +1,8 @@
 import { request } from "./client";
 export const adminSession = {
-  get: () => sessionStorage.getItem("valthera-admin-token"),
-  set: (token) => sessionStorage.setItem("valthera-admin-token", token),
-  clear: () => sessionStorage.removeItem("valthera-admin-token"),
+  get: () => sessionStorage.getItem("cmc-tradevault-admin-token"),
+  set: (token) => sessionStorage.setItem("cmc-tradevault-admin-token", token),
+  clear: () => sessionStorage.removeItem("cmc-tradevault-admin-token"),
 };
 const base = (
   import.meta.env.VITE_ADMIN_API_URL ||

@@ -78,7 +78,7 @@
 }
 .badge {
   padding: 5px 9px;
-  background: #b3f6aa10;
+  background: #31e6ff10;
   color: var(--mint);
   border-radius: 4px;
   font-size: 10px;
@@ -104,8 +104,8 @@
 }
 .success {
   padding: 17px;
-  border: 1px solid #b3f6aa30;
-  background: #b3f6aa0c;
+  border: 1px solid #31e6ff30;
+  background: #31e6ff0c;
   color: var(--mint);
   border-radius: 9px;
   font-size: 13px;

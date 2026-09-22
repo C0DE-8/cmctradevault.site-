@@ -8,7 +8,7 @@
   width: 235px;
   padding: 33px 24px 20px;
   border-right: 1px solid var(--line);
-  background: #101713;
+  background: linear-gradient(180deg, #0b1024, #070a17);
   display: flex;
   flex-direction: column;
   z-index: 30;
@@ -45,8 +45,9 @@
 }
 .sidebar nav a:hover,
 .sidebar nav a.active {
-  background: #b3f6aa10;
+  background: linear-gradient(90deg, #31e6ff18, #8b5cf60b);
   color: var(--mint);
+  box-shadow: inset 2px 0 var(--mint);
 }
 .sidebarBottom {
   margin-top: auto;
@@ -54,7 +55,7 @@
 }
 .sidebarBottom > div {
   padding: 20px;
-  background: linear-gradient(130deg, #b3f6aa10, #b3f6aa02);
+  background: linear-gradient(130deg, #31e6ff10, #31e6ff02);
   border: 1px solid var(--line);
   border-radius: 10px;
 }
@@ -99,6 +100,8 @@
   padding: 0 36px;
   font-size: 11px;
   color: var(--muted);
+  background: #070b19cc;
+  backdrop-filter: blur(18px);
 }
 .topbar > span > span {
   padding: 0 14px;
@@ -118,8 +121,8 @@
 .avatar {
   width: 32px;
   height: 32px;
-  border: 1px solid #b3f6aa30;
-  background: #b3f6aa10;
+  border: 1px solid #31e6ff30;
+  background: #31e6ff10;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -143,7 +146,7 @@
   gap: 20px;
 }
 .banner {
-  background: #b3f6aa0b;
+  background: #31e6ff0b;
   padding: 13px 36px;
   font-size: 11px;
   color: #b4c4b5;

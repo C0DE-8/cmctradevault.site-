@@ -1,6 +1,6 @@
 .balance {
   background:
-    radial-gradient(ellipse at 90% 20%, #b3f6aa14, transparent 50%),
+    radial-gradient(ellipse at 90% 20%, #31e6ff14, transparent 50%),
     var(--panel);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -64,12 +64,12 @@
 }
 .tabs button.active {
   color: var(--mint);
-  background: #b3f6aa10;
+  background: #31e6ff10;
 }
 .address {
   padding: 17px;
-  background: #b3f6aa06;
-  border: 1px solid #b3f6aa20;
+  background: #31e6ff06;
+  border: 1px solid #31e6ff20;
   border-radius: 8px;
   display: grid;
   gap: 12px;
@@ -109,7 +109,7 @@
 .badge {
   padding: 5px 7px;
   border-radius: 4px;
-  background: #b3f6aa0c;
+  background: #31e6ff0c;
   color: var(--mint);
   font-size: 10px;
 }

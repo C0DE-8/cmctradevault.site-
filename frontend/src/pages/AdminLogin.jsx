@@ -35,7 +35,7 @@ export default function AdminLogin() {
         <div className={s.icon}>
           <FiShield />
         </div>
-        <span>VALTHERA ADMINISTRATION</span>
+        <span>CMC TRADEVAULT · ADMINISTRATION</span>
         <h1>Your control room.</h1>
         <p>
           Sign in to manage investors, review requests, and follow account

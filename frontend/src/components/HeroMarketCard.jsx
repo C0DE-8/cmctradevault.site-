@@ -110,8 +110,8 @@ export default function HeroMarketCard() {
           >
             <defs>
               <linearGradient id={gradient} x1="0" y1="0" x2="0" y2="1">
-                <stop stopColor="#b3f6aa" stopOpacity=".2" />
-                <stop offset="1" stopColor="#b3f6aa" stopOpacity="0" />
+                <stop stopColor="#31e6ff" stopOpacity=".2" />
+                <stop offset="1" stopColor="#31e6ff" stopOpacity="0" />
               </linearGradient>
             </defs>
             {[35, 85, 135, 185].map((y) => (
@@ -132,7 +132,7 @@ export default function HeroMarketCard() {
               points={points}
               pathLength="1"
               fill="none"
-              stroke="#b3f6aa"
+              stroke="#31e6ff"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"

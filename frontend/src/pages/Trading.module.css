@@ -2,8 +2,8 @@
   font-size: 8px;
   color: var(--mint);
   letter-spacing: 1px;
-  border: 1px solid #b3f6aa25;
-  background: #b3f6aa08;
+  border: 1px solid #31e6ff25;
+  background: #31e6ff08;
   border-radius: 20px;
   padding: 9px 12px;
   white-space: nowrap;
@@ -89,8 +89,8 @@
 }
 .direction .up {
   color: var(--mint);
-  border-color: #b3f6aa50;
-  background: #b3f6aa10;
+  border-color: #31e6ff50;
+  background: #31e6ff10;
 }
 .direction .down {
   color: #f29288;
@@ -111,8 +111,8 @@
   color: var(--muted);
 }
 .durations .selected {
-  background: #b3f6aa0a;
-  border-color: #b3f6aa40;
+  background: #31e6ff0a;
+  border-color: #31e6ff40;
   color: var(--mint);
 }
 .terms {

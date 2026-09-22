@@ -30,7 +30,7 @@ export default function Landing() {
       {!ready && <SitePreloader onReady={setReady} />}
       <div className={s.page} inert={!ready}>
         <div className={s.announcement}>
-          <span className={s.liveDot} /> A new perspective on investing.{" "}
+          <span className={s.liveDot} /> DIGITAL MARKETS. SECURED BY DESIGN.{" "}
           <Link to="/register">
             Meet your next chapter <FiArrowUpRight />
           </Link>
@@ -39,7 +39,7 @@ export default function Landing() {
           <Brand />
           <nav className={menu ? s.open : ""}>
             <a href="#possibilities" onClick={() => setMenu(false)}>
-              Why Valthera
+              Why TradeVault
             </a>
             <a href="#markets" onClick={() => setMenu(false)}>
               Explore markets
@@ -73,26 +73,25 @@ export default function Landing() {
             <div className={s.heroCopy}>
               <div className={s.pill}>
                 <span />
-                YOUR FUTURE. MORE POSSIBILITIES.
+                THE NEW LAYER FOR DIGITAL WEALTH
               </div>
               <h1>
-                A little vision.
-                <br />A bigger <span>future.</span>
+                Trade the future.
+                <br />Secure the <span>edge.</span>
               </h1>
               <p>
-                Follow Bitcoin and crypto markets, explore trading and investment
-                plans, and see your portfolio in perspective. Your next move
-                starts with a clearer view.
+                Track digital markets, deploy strategies, and manage every asset
+                from one intelligent vault built for the always-on economy.
               </p>
               <div className={s.heroActions}>
                 <Button to="/register">
-                  Start your journey <FiArrowUpRight />
+                  Enter TradeVault <FiArrowUpRight />
                 </Button>
                 <ArrowLink to="/preview">Explore the platform</ArrowLink>
               </div>
               <div className={s.heroNote}>
-                <FiShield /> A clearer view of your investments <span>•</span>{" "}
-                All in one place
+                <FiShield /> Secure portfolio infrastructure <span>•</span>{" "}
+                Markets live 24/7
               </div>
             </div>
             <div
@@ -105,6 +104,7 @@ export default function Landing() {
                 <span className={s.orbitTrail} />
               </div>
               <div className={s.grid} aria-hidden="true" />
+              <img className={s.vaultArtwork} src="/cmc-vault-hero.png" alt="" />
               <button
                 type="button"
                 className={s.motionToggle}
@@ -287,11 +287,11 @@ export default function Landing() {
             <div>
               {[
                 [
-                  "What can I do with Valthera Investments?",
+                  "What can I do with CMC TradeVault?",
                   "Manage your account, explore investment plans, follow copy traders, place supported trades, and track deposit and withdrawal requests from your dashboard.",
                 ],
                 [
-                  "Can I mine crypto on Valthera today?",
+                  "Can I mine crypto on CMC TradeVault today?",
                   "Mining is planned and is not active yet. The mining explorer is an illustration of a proposed rewards model ($0.10 per hour per 100 W), not a connected miner or a promise of rewards. Availability and terms will be shared before launch.",
                 ],
                 [
@@ -308,7 +308,7 @@ export default function Landing() {
                 ],
                 [
                   "Is this a self-custody Web3 wallet?",
-                  "No. Valthera Investments is an account-based investment platform. The dashboard uses the platform’s balances and deposit addresses; it does not connect to or control a self-custody wallet.",
+                  "No. CMC TradeVault is an account-based investment platform. The dashboard uses the platform’s balances and deposit addresses; it does not connect to or control a self-custody wallet.",
                 ],
               ].map(([q, a]) => (
                 <details key={q}>
@@ -333,7 +333,7 @@ export default function Landing() {
             <Button to="/register">
               Create your account <FiArrowUpRight />
             </Button>
-            <p>A little vision can go a long way.</p>
+            <p>One secure vault can take you further.</p>
           </section>
         </main>
         <footer className={s.footer}>
@@ -354,7 +354,7 @@ export default function Landing() {
           </p>
           <div className={s.copyright}>
             <span>
-              © {new Date().getFullYear()} Valthera Investments. All rights
+              © {new Date().getFullYear()} CMC TradeVault. All rights
               reserved.
             </span>
             <span>

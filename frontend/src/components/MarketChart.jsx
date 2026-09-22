@@ -120,8 +120,8 @@ export default function MarketChart({ asset, symbol, advanced = false }) {
               >
                 <defs>
                   <linearGradient id={gradient} x1="0" y1="0" x2="0" y2="1">
-                    <stop stopColor="#b3f6aa" stopOpacity=".22" />
-                    <stop offset="1" stopColor="#b3f6aa" stopOpacity="0" />
+                    <stop stopColor="#31e6ff" stopOpacity=".22" />
+                    <stop offset="1" stopColor="#31e6ff" stopOpacity="0" />
                   </linearGradient>
                 </defs>
                 <polygon
@@ -131,7 +131,7 @@ export default function MarketChart({ asset, symbol, advanced = false }) {
                 <polyline
                   points={points}
                   fill="none"
-                  stroke="#b3f6aa"
+                  stroke="#31e6ff"
                   strokeWidth="2"
                 />
               </svg>

@@ -37,7 +37,7 @@ export default function Auth({ register = false }) {
         <div>
           <span>YOUR NEXT CHAPTER</span>
           <h1>
-            A little vision.
+            Your secure edge.
             <br />A bigger <em>future.</em>
           </h1>
           <p>
@@ -185,7 +185,7 @@ export default function Auth({ register = false }) {
           <p className={s.switch}>
             {register
               ? "Already have an account?"
-              : "New to Valthera Investments?"}{" "}
+              : "New to CMC TradeVault?"}{" "}
             <Link to={register ? "/login" : "/register"}>
               {register ? "Sign in" : "Create an account"}
             </Link>

@@ -7,7 +7,7 @@ const assert = require('node:assert/strict');
   await page.route('**/api/markets/*', route=>route.fulfill({json:{asset:'BTC',price:62000,changePercent:-1.25,updatedAt:new Date().toISOString(),stale:false,candles:Array.from({length:24},(_,i)=>({time:Date.now()+i*3600000,close:62000+i*15}))}}));
   await page.route('**/embed-widget-timeline.js', route=>route.abort());
   await page.goto('http://127.0.0.1:5173', {waitUntil:'domcontentloaded'});
-  await page.getByRole('status',{name:'Loading Valthera Investments'}).waitFor({state:'detached',timeout:10000});
+  await page.getByRole('status',{name:'Loading CMC TradeVault'}).waitFor({state:'detached',timeout:10000});
   await page.getByRole('button',{name:'Binary practice'}).click();
   await page.getByRole('heading',{name:'A clearer way to understand up or down.'}).waitFor();
   await page.getByRole('button',{name:'Copy trading',exact:true}).click();

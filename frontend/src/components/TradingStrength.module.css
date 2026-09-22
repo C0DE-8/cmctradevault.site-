@@ -1,8 +1,8 @@
 .panel {
-  border: 1px solid #b3f6aa20;
+  border: 1px solid #31e6ff20;
   border-radius: 12px;
   background:
-    radial-gradient(ellipse at right top, #b3f6aa09, transparent), var(--panel);
+    radial-gradient(ellipse at right top, #31e6ff09, transparent), var(--panel);
   padding: 24px;
   margin: 24px 0;
 }
@@ -66,8 +66,8 @@
   transition: background 0.5s;
 }
 .bars .lit {
-  background: linear-gradient(#b3f6aa, #78a873);
-  box-shadow: 0 0 12px #b3f6aa15;
+  background: linear-gradient(#31e6ff, #8b5cf6);
+  box-shadow: 0 0 12px #31e6ff15;
 }
 .progress {
   display: flex;

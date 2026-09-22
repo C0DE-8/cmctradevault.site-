@@ -1,17 +1,17 @@
 import { useId } from "react";
-import { FiArrowUpRight, FiAlertCircle, FiArrowRight } from "react-icons/fi";
+import { FiAlertCircle, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import s from "./UI.module.css";
 export function Brand() {
   return (
-    <Link to="/" className={s.brand} aria-label="Valthera Investments home">
+    <Link to="/" className={s.brand} aria-label="CMC TradeVault home">
       <span className={s.mark}>
-        <FiArrowUpRight />
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 9.5v13L16 29 5 22.5v-13L16 3Z"/><path d="m11 12 5-3 5 3v7l-5 3-5-3v-7Z"/><circle cx="16" cy="15.5" r="2"/></svg>
       </span>
       <span className={s.wordmark}>
-        Valthera<span className={s.light}>Investments</span>
+        <span>CMC</span><span className={s.light}>TRADEVAULT</span>
       </span>
-      <span className={s.dot}>®</span>
+      <span className={s.dot}>●</span>
     </Link>
   );
 }
@@ -92,8 +92,8 @@ export function Chart({ small = false }) {
     >
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-          <stop stopColor="#b3f6aa" stopOpacity=".22" />
-          <stop offset="1" stopColor="#b3f6aa" stopOpacity="0" />
+          <stop stopColor="#31e6ff" stopOpacity=".3" />
+          <stop offset="1" stopColor="#8b5cf6" stopOpacity="0" />
         </linearGradient>
       </defs>
       {!small &&
@@ -112,7 +112,7 @@ export function Chart({ small = false }) {
       <path
         d="M0 164 L20 157 L36 167 L56 139 L72 148 L89 130 L107 135 L125 115 L140 125 L160 121 L179 143 L199 117 L216 110 L236 121 L251 89 L270 102 L293 88 L310 96 L330 64 L350 74 L372 60 L390 77 L409 53 L430 65 L449 35 L468 43 L490 31 L512 51 L530 22 L550 32 L570 16 L600 7"
         fill="none"
-        stroke="#b3f6aa"
+        stroke="#31e6ff"
         strokeWidth="2.5"
       />
     </svg>

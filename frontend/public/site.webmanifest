@@ -1,10 +1,10 @@
 {
-  "name": "Valthera Investments",
-  "short_name": "Valthera",
+  "name": "CMC TradeVault",
+  "short_name": "CMC TradeVault",
   "description": "A clearer perspective on investing and digital assets.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0b100e",
-  "theme_color": "#0b100e",
+  "background_color": "#050816",
+  "theme_color": "#050816",
   "icons": [{ "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }]
 }

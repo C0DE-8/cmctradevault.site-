@@ -1,20 +1,20 @@
 .markets {
   color-scheme: dark;
-  --tv-widget-accent-color: #b3f6aa;
-  --tv-widget-text-color: #eef2ec;
+  --tv-widget-accent-color: #31e6ff;
+  --tv-widget-text-color: #f4f7ff;
   --tv-widget-background-color: transparent;
   --tv-widget-font-family: "DM Sans", sans-serif;
-  --tv-widget-price-text-color: #eef2ec;
-  --tv-widget-positive-color: #b3f6aa;
-  --tv-widget-positive-area-top-color: #b3f6aa30;
-  --tv-widget-positive-area-bottom-color: #b3f6aa02;
+  --tv-widget-price-text-color: #f4f7ff;
+  --tv-widget-positive-color: #31e6ff;
+  --tv-widget-positive-area-top-color: #31e6ff30;
+  --tv-widget-positive-area-bottom-color: #31e6ff02;
   --tv-widget-negative-color: #f29288;
   --tv-widget-negative-area-top-color: #f2928825;
   --tv-widget-negative-area-bottom-color: #f2928802;
-  --tv-widget-scales-font-color: #89958e;
-  --tv-widget-popup-background-color: #18231b;
-  --tv-widget-tooltip-background-color: #18231b;
-  --tv-widget-tooltip-text-color: #eef2ec;
+  --tv-widget-scales-font-color: #8995b4;
+  --tv-widget-popup-background-color: #10172e;
+  --tv-widget-tooltip-background-color: #10172e;
+  --tv-widget-tooltip-text-color: #f4f7ff;
 }
 .bar {
   display: flex;
@@ -43,7 +43,7 @@
 }
 .card {
   min-width: 0;
-  border: 1px solid #b3f6aa18;
+  border: 1px solid #31e6ff18;
   border-radius: 13px;
   background: linear-gradient(140deg, #1a251b80, #111813);
   transition:
@@ -51,9 +51,9 @@
     transform 0.3s,
     box-shadow 0.3s;
 }
-.card:focus-within { border-color: #b3f6aa65; }
+.card:focus-within { border-color: #31e6ff65; }
 @media (hover: hover) and (pointer: fine) {
-  .card:hover { border-color: #b3f6aa60; transform: translateY(-4px); box-shadow: 0 16px 32px #0004; }
+  .card:hover { border-color: #31e6ff60; transform: translateY(-4px); box-shadow: 0 16px 32px #0004; }
 }
 @media (prefers-reduced-motion: reduce) {
   .card { transition: none; }
@@ -68,12 +68,12 @@
 .index {
   height: 35px;
   width: 35px;
-  border: 1px solid #b3f6aa20;
+  border: 1px solid #31e6ff20;
   border-radius: 9px;
   display: grid;
   place-items: center;
   color: var(--mint);
-  background: #b3f6aa08;
+  background: #31e6ff08;
   font-size: 11px;
 }
 .card h3 {
@@ -111,7 +111,7 @@
   padding: 20px;
   color: var(--muted);
   font-size: 12px;
-  background: radial-gradient(ellipse, #b3f6aa08, transparent 70%);
+  background: radial-gradient(ellipse, #31e6ff08, transparent 70%);
 }
 .placeholder > svg {
   color: var(--mint);
@@ -153,9 +153,9 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  border: 1px solid #b3f6aa25;
+  border: 1px solid #31e6ff25;
   border-radius: 7px;
-  background: #b3f6aa08;
+  background: #31e6ff08;
   padding: 10px 12px;
   color: var(--mint);
   font-size: 11px;

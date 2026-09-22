@@ -44,7 +44,7 @@
   color: var(--muted);
 }
 .art {
-  border: 1px solid #b3f6aa20;
+  border: 1px solid #31e6ff20;
   border-radius: 50%;
   width: 220px;
   height: 220px;
@@ -53,8 +53,8 @@
   color: var(--mint);
   font-size: 120px;
   box-shadow:
-    0 0 0 35px #b3f6aa03,
-    0 0 0 70px #b3f6aa02;
+    0 0 0 35px #31e6ff03,
+    0 0 0 70px #31e6ff02;
   margin: 60px auto;
 }
 .page main {

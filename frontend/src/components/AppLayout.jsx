@@ -65,8 +65,8 @@ export default function AppLayout({ preview = false, admin = false }) {
           <div>
             <FiArrowUpRight />
             <h3>
-              A little vision.
-              <br />A bigger future.
+              One secure vault.
+              <br />Every next move.
             </h3>
             <p>Your next chapter is yours.</p>
           </div>
@@ -128,7 +128,7 @@ export default function AppLayout({ preview = false, admin = false }) {
           <Outlet />
         </main>
         <footer className={s.footer}>
-          © {new Date().getFullYear()} Valthera Investments{" "}
+          © {new Date().getFullYear()} CMC TradeVault{" "}
           <span>Investing involves risk. Returns are not guaranteed.</span>
           <NavLink to="/terms">Terms &amp; investment policy</NavLink>
         </footer>

@@ -14,17 +14,17 @@
   justify-self: start;
 }
 .success {
-  background: #b3f6aa0c;
+  background: #31e6ff0c;
   color: var(--mint);
-  border: 1px solid #b3f6aa25;
+  border: 1px solid #31e6ff25;
   padding: 14px;
   border-radius: 8px;
   font-size: 12px;
   margin: 0;
 }
 .review {
-  background: #b3f6aa06;
-  border: 1px solid #b3f6aa30;
+  background: #31e6ff06;
+  border: 1px solid #31e6ff30;
   border-radius: 10px;
   padding: 20px;
 }

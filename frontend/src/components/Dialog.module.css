@@ -2,7 +2,7 @@
   width: min(540px, calc(100vw - 32px));
   max-height: 85dvh;
   padding: 0;
-  border: 1px solid #b3f6aa35;
+  border: 1px solid #31e6ff35;
   border-radius: 17px;
   background: #121b15;
   color: var(--text);

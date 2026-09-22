@@ -4,4 +4,4 @@ Disallow: /app/
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://valtherainvestments.com/sitemap.xml
+Sitemap: https://cmctradevault.site/sitemap.xml

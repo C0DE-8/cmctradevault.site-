@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  background: #0b100e;
+  background: #050816;
   color: var(--text);
   padding: 28px 7vw 70px;
 }
@@ -47,9 +47,9 @@
   align-items: flex-start;
   margin: 50px 0;
   padding: 22px;
-  border: 1px solid #b3f6aa40;
+  border: 1px solid #31e6ff40;
   border-radius: 14px;
-  background: #b3f6aa0b;
+  background: #31e6ff0b;
   color: #cbd8cd;
 }
 .notice svg {

@@ -24,7 +24,7 @@
   font-size: 7px;
   letter-spacing: 1px;
   padding: 5px 7px;
-  background: #b3f6aa12;
+  background: #31e6ff12;
   border-radius: 4px;
   color: var(--mint);
 }
@@ -33,7 +33,7 @@
   width: 4px;
   border-radius: 50%;
   background: var(--mint);
-  box-shadow: 0 0 0 0 #b3f6aa40;
+  box-shadow: 0 0 0 0 #31e6ff40;
   animation: heartbeat 2.8s ease-out infinite;
 }
 .stale {
@@ -76,7 +76,7 @@
   animation: priceReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .tickUp {
-  --tick-color: #b3f6aa;
+  --tick-color: #31e6ff;
 }
 .tickDown {
   --tick-color: #f29288;
@@ -158,11 +158,11 @@
 }
 @keyframes heartbeat {
   0% {
-    box-shadow: 0 0 0 0 #b3f6aa40;
+    box-shadow: 0 0 0 0 #31e6ff40;
   }
   65%,
   100% {
-    box-shadow: 0 0 0 6px #b3f6aa00;
+    box-shadow: 0 0 0 6px #31e6ff00;
   }
 }
 @keyframes priceReveal {
