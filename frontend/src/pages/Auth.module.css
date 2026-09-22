@@ -9,7 +9,7 @@
   flex-direction: column;
   justify-content: space-between;
   background:
-    radial-gradient(ellipse at 30% 65%, #344b2c66, transparent 60%), #131e16;
+    radial-gradient(ellipse at 30% 65%, #203b8066, transparent 60%), #0b1228;
   border-right: 1px solid var(--line);
   overflow: hidden;
 }

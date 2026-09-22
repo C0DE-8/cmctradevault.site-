@@ -23,7 +23,7 @@
 .label {
   font-size: 8px;
   letter-spacing: 1.7px;
-  color: #67766b;
+  color: #68779b;
   margin: 48px 0 19px 10px;
 }
 .sidebar nav {
@@ -37,7 +37,7 @@
   align-items: center;
   padding: 13px 12px;
   font-size: 12px;
-  color: #929e95;
+  color: #8e9ab9;
   border-radius: 8px;
 }
 .sidebar nav a svg {
@@ -105,7 +105,7 @@
 }
 .topbar > span > span {
   padding: 0 14px;
-  color: #425148;
+  color: #4a587a;
 }
 .topbar > div {
   display: flex;
@@ -138,7 +138,7 @@
 }
 .footer {
   padding: 20px 36px;
-  color: #63766a;
+  color: #69799e;
   font-size: 9px;
   display: flex;
   justify-content: space-between;
@@ -149,7 +149,7 @@
   background: #31e6ff0b;
   padding: 13px 36px;
   font-size: 11px;
-  color: #b4c4b5;
+  color: #b2bfdd;
   display: flex;
   justify-content: space-between;
   gap: 15px;

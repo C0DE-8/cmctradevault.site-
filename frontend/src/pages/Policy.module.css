@@ -38,7 +38,7 @@
 .lead {
   font-size: 19px;
   line-height: 1.65;
-  color: #c1cdc3;
+  color: #b8c3df;
   max-width: 700px;
 }
 .notice {
@@ -50,7 +50,7 @@
   border: 1px solid #31e6ff40;
   border-radius: 14px;
   background: #31e6ff0b;
-  color: #cbd8cd;
+  color: #c5d1ec;
 }
 .notice svg {
   color: var(--mint);
