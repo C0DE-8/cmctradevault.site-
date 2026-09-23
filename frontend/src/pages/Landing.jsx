@@ -28,6 +28,7 @@ import HeroMarketCard from "../components/HeroMarketCard";
 import TradingViewMarkets from "../components/TradingViewMarkets";
 import SitePreloader from "../components/SitePreloader";
 import ActivityToast from "../components/ActivityToast";
+import SmartsuppChat from "../components/SmartsuppChat";
 import { CoinTicker, TradingRoutes, BitcoinNews, MiningSection, CommunitySection } from "../components/LandingExtras";
 
 export default function Landing() {
@@ -46,6 +47,7 @@ export default function Landing() {
     <>
       {!ready && <SitePreloader onReady={setReady} />}
       <div className={s.page} inert={!ready}>
+        <SmartsuppChat />
         <div className={s.announcement}>
           <span className={s.liveDot} /> DIGITAL MARKETS. SECURED BY DESIGN.{" "}
           <Link to="/register">

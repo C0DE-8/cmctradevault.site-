@@ -18,6 +18,7 @@ import { Brand, Button } from "./UI";
 import { session } from "../api/client";
 import { adminSession } from "../api/admin";
 import s from "./AppLayout.module.css";
+import SmartsuppChat from "./SmartsuppChat";
 const links = [
   ["/app", "Overview", FiGrid],
   ["/app/investments", "Investments", FiLayers],
@@ -39,6 +40,7 @@ export default function AppLayout({ preview = false, admin = false }) {
   const navigate = useNavigate();
   return (
     <div className={s.layout}>
+      {!admin && <SmartsuppChat />}
       <aside className={`${s.sidebar} ${open ? s.open : ""}`}>
         <div className={s.brandRow}>
           <Brand />
