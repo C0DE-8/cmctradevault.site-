@@ -27,7 +27,9 @@ import s from "./Landing.module.css";
 import HeroMarketCard from "../components/HeroMarketCard";
 import TradingViewMarkets from "../components/TradingViewMarkets";
 import SitePreloader from "../components/SitePreloader";
+import ActivityToast from "../components/ActivityToast";
 import { CoinTicker, TradingRoutes, BitcoinNews, MiningSection, CommunitySection } from "../components/LandingExtras";
+
 export default function Landing() {
   const [menu, setMenu] = useState(false);
   const [motionPaused, setMotionPaused] = useState(false);
@@ -422,6 +424,7 @@ export default function Landing() {
             </span>
           </div>
         </footer>
+        <ActivityToast />
       </div>
     </>
   );
