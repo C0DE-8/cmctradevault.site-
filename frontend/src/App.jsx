@@ -115,6 +115,10 @@ export default function App() {
             element={<AdminWorkspace key="users" section="users" />}
           />
           <Route
+            path="plans"
+            element={<AdminWorkspace key="plans" section="plans" />}
+          />
+          <Route
             path="wallet-addresses"
             element={<AdminWorkspace key="wallet-addresses" section="wallet-addresses" />}
           />

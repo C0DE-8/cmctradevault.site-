@@ -20,6 +20,8 @@ import s from "./AdminWorkspace.module.css";
 export default function AdminWorkspace({ section }) {
   return section === "users" ? (
     <Investors />
+  ) : section === "plans" ? (
+    <InvestmentPlans />
   ) : section === "profile" ? (
     <AdminProfile />
   ) : section === "wallet-addresses" ? (
@@ -30,6 +32,205 @@ export default function AdminWorkspace({ section }) {
     <Activity />
   ) : (
     <Overview />
+  );
+}
+function InvestmentPlans() {
+  const plans = useApi("/plans?active_only=0", adminApi);
+  const [editing, setEditing] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const rows = plans.data?.plans || [];
+
+  async function submit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const values = new FormData(form);
+    const body = {
+      name: String(values.get("name") || "").trim(),
+      roi_percent: Number(values.get("roi_percent")),
+      accuracy_percent: Number(values.get("accuracy_percent")),
+      price: Number(values.get("price")),
+      duration_days: Number(values.get("duration_days")),
+      is_active: values.get("is_active") === "on" ? 1 : 0,
+    };
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      const result = editing
+        ? await adminApi.put(`/plans/${editing.id}`, body)
+        : await adminApi.post("/plans", body);
+      setMessage(result.message);
+      setEditing(null);
+      form.reset();
+      plans.reload();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function remove(plan) {
+    if (!window.confirm(`Delete the "${plan.name}" investment plan?`)) return;
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      const result = await adminApi.delete(`/plans/${plan.id}`);
+      setMessage(result.message);
+      if (editing?.id === plan.id) setEditing(null);
+      plans.reload();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <>
+      <Heading eyebrow="PLAN MANAGEMENT" title="Investment plans.">
+        Create and update the plans available to investors, or deactivate plans
+        that should no longer be offered.
+      </Heading>
+      {error && <p className={s.formError} role="alert">{error}</p>}
+      {message && <p className={s.formSuccess} role="status">{message}</p>}
+      <div className={s.planLayout}>
+        <section className={s.panel}>
+          <h3>{editing ? `Edit ${editing.name}` : "Create an investment plan"}</h3>
+          <form
+            key={editing?.id || "new"}
+            className={s.walletForm}
+            onSubmit={submit}
+          >
+            <Field
+              label="Plan name"
+              name="name"
+              maxLength="150"
+              defaultValue={editing?.name || ""}
+              required
+            />
+            <Field
+              label="Minimum investment (USD)"
+              name="price"
+              type="number"
+              min="0"
+              step="0.01"
+              defaultValue={editing?.price ?? ""}
+              required
+            />
+            <Field
+              label="Stated ROI (%)"
+              name="roi_percent"
+              type="number"
+              min="0"
+              step="0.01"
+              defaultValue={editing?.roi_percent ?? ""}
+              required
+            />
+            <Field
+              label="Accuracy (%)"
+              name="accuracy_percent"
+              type="number"
+              min="0"
+              max="100"
+              step="0.01"
+              defaultValue={editing?.accuracy_percent ?? ""}
+              required
+            />
+            <Field
+              label="Duration (days)"
+              name="duration_days"
+              type="number"
+              min="1"
+              step="1"
+              defaultValue={editing?.duration_days ?? ""}
+              required
+            />
+            <label className={s.planActive}>
+              <input
+                type="checkbox"
+                name="is_active"
+                defaultChecked={editing ? Boolean(Number(editing.is_active)) : true}
+              />
+              <span>Offer this plan to investors</span>
+            </label>
+            <div className={s.walletActions}>
+              <Button type="submit" disabled={busy}>
+                {busy ? "Saving…" : editing ? "Save changes" : "Create plan"}
+              </Button>
+              {editing && (
+                <Button
+                  type="button"
+                  secondary
+                  disabled={busy}
+                  onClick={() => setEditing(null)}
+                >
+                  Cancel
+                </Button>
+              )}
+            </div>
+          </form>
+        </section>
+        <section className={s.panel}>
+          <h3>All investment plans</h3>
+          <Status {...plans} retry={plans.reload} />
+          {plans.data &&
+            (rows.length ? (
+              <div className={s.table}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Plan</th>
+                      <th>Minimum</th>
+                      <th>ROI</th>
+                      <th>Accuracy</th>
+                      <th>Duration</th>
+                      <th>Status</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((plan) => (
+                      <tr key={plan.id}>
+                        <td><strong>{plan.name}</strong></td>
+                        <td>{money(plan.price)}</td>
+                        <td>{plan.roi_percent}%</td>
+                        <td>{plan.accuracy_percent}%</td>
+                        <td>{plan.duration_days} days</td>
+                        <td>
+                          <span className={Number(plan.is_active) ? s.ok : s.failure}>
+                            {Number(plan.is_active) ? "Active" : "Inactive"}
+                          </span>
+                        </td>
+                        <td>
+                          <div className={s.walletActions}>
+                            <button type="button" disabled={busy} onClick={() => setEditing(plan)}>
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              className={s.danger}
+                              disabled={busy}
+                              onClick={() => remove(plan)}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <Empty>No investment plans have been created yet.</Empty>
+            ))}
+        </section>
+      </div>
+    </>
   );
 }
 function AdminProfile() {

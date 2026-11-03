@@ -30,6 +30,7 @@ const links = [
 const adminLinks = [
   ["/admin", "Admin overview", FiGrid],
   ["/admin/users", "Investors", FiUsers],
+  ["/admin/plans", "Investment plans", FiLayers],
   ["/admin/wallet-addresses", "Wallet addresses", FiMapPin],
   ["/admin/approvals", "Review requests", FiCreditCard],
   ["/admin/activity", "Activity logs", FiActivity],

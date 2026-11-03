@@ -79,6 +79,22 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
 }
+.planLayout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr);
+  gap: 18px;
+  align-items: start;
+}
+.planActive {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.planActive input {
+  accent-color: var(--mint);
+}
 .panelIntro {
   display: flex;
   align-items: center;
@@ -311,6 +327,9 @@
     grid-template-columns: repeat(2, 1fr);
   }
   .walletLayout {
+    grid-template-columns: 1fr;
+  }
+  .planLayout {
     grid-template-columns: 1fr;
   }
 }
