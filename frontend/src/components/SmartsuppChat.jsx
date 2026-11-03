@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const SMARTSUPP_KEY = "5687507bd691b294ca90956800e268b8b47fdeeb";
+const SMARTSUPP_KEY = "c3bf2a01fdd53559bd34b0a8f8f30a7233bea3e5";
 const SCRIPT_ID = "smartsupp-live-chat";
 
 export default function SmartsuppChat() {
